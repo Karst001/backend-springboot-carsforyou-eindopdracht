@@ -1,11 +1,10 @@
 package nl.carsforyou.garage.entities;
 
 import jakarta.persistence.*;
-
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "Users")
+@Table(name = "users")
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,8 +12,8 @@ public class UserEntity {
     @Column(name = "email_address", nullable = false)
     private String emailAddress;
     @Column(name = "signup_date", nullable = false)
-    private Date signupDate;
-    private Date lastSigninDate;
+    private LocalDateTime signupDate;
+    private LocalDateTime lastSigninDate;
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;
     @Column(name = "user_role", nullable = false)
@@ -22,8 +21,8 @@ public class UserEntity {
 
     public UserEntity() {}
 
-    public UserEntity(Long userId, String emailAddress, Date signupDate,
-        Date lastSigninDate, String passwordHash, String userRole) {
+    public UserEntity(Long userId, String emailAddress, LocalDateTime signupDate,
+                      LocalDateTime lastSigninDate, String passwordHash, String userRole) {
 
         this.userId = userId;
         this.emailAddress = emailAddress;
@@ -49,19 +48,19 @@ public class UserEntity {
         this.emailAddress = emailAddress;
     }
 
-    public Date getSignupDate() {
+    public LocalDateTime getSignupDate() {
         return signupDate;
     }
 
-    public void setSignupDate(Date signupDate) {
+    public void setSignupDate(LocalDateTime signupDate) {
         this.signupDate = signupDate;
     }
 
-    public Date getLastSigninDate() {
+    public LocalDateTime getLastSigninDate() {
         return lastSigninDate;
     }
 
-    public void setLastSigninDate(Date lastSigninDate) {
+    public void setLastSigninDate(LocalDateTime lastSigninDate) {
         this.lastSigninDate = lastSigninDate;
     }
 

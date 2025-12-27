@@ -1,10 +1,11 @@
 package nl.carsforyou.garage.entities;
 
 import jakarta.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
+
 
 @Entity
-@Table(name = "Customers")
+@Table(name = "customers")
 public class CustomerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,13 +21,13 @@ public class CustomerEntity {
     private String emailAddress;
     @Column(name = "user_id", nullable = true)                          //nullable because a customer may not be a user like walk-in customers do not visit via web-api
     private Long userId;
-    private Date newsletterSignupDate;
+    private LocalDateTime newsletterSignupDate;
 
     public CustomerEntity() {}
 
     public CustomerEntity(Long customerId, String firstName, String lastName, String address,
         String zipCode, String city, String country, String telephoneNumber, String emailAddress,
-                          Long userId, Date newsletterSignupDate) {
+                          Long userId, LocalDateTime newsletterSignupDate) {
 
         this.customerId = customerId;
         this.firstName = firstName;
@@ -122,11 +123,11 @@ public class CustomerEntity {
         this.userId = userId;
     }
 
-    public Date getNewsletterSignupDate() {
+    public LocalDateTime getNewsletterSignupDate() {
         return newsletterSignupDate;
     }
 
-    public void setNewsletterSignupDate(Date newsletterSignupDate) {
+    public void setNewsletterSignupDate(LocalDateTime newsletterSignupDate) {
         this.newsletterSignupDate = newsletterSignupDate;
     }
 }

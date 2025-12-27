@@ -1,11 +1,10 @@
 package nl.carsforyou.garage.entities;
 
 import jakarta.persistence.*;
-
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "ServiceOrderParts")
+@Table(name = "service_order_parts")
 public class ServiceOrderPartEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
