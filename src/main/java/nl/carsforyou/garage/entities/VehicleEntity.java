@@ -2,12 +2,14 @@ package nl.carsforyou.garage.entities;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+
 @Entity
-@Table(name = "Vehicles")
+@Table(name = "vehicles")
 public class VehicleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long VehicleId;
+    private Long vehicleId;
     @Column(name = "license_plate", nullable = false)
     private String licensePlate;
     @Column(name = "vin_number", nullable = false)
@@ -19,17 +21,17 @@ public class VehicleEntity {
     private String paintColor;
     private String bodyStyle;
     private Boolean trailerHitch;
-    private Double costPrice;
-    private Double salePrice;
+    private BigDecimal  costPrice;
+    private BigDecimal  salePrice;
     private Long customerId;
 
     public VehicleEntity() {}
 
     public VehicleEntity(Long vehicleId, String licensePlate, String vinNumber,
         String make, String model, String paintColor, String bodyStyle,
-        boolean trailerHitch, double costPrice, double salePrice, Long customerId) {
+        boolean trailerHitch, BigDecimal  costPrice, BigDecimal  salePrice, Long customerId) {
 
-        VehicleId = vehicleId;
+        this.vehicleId = vehicleId;
         this.licensePlate = licensePlate;
         this.vinNumber = vinNumber;
         this.make = make;
@@ -43,11 +45,11 @@ public class VehicleEntity {
     }
 
     public Long getVehicleId() {
-        return VehicleId;
+        return vehicleId;
     }
 
     public void setVehicleId(Long vehicleId) {
-        VehicleId = vehicleId;
+        this.vehicleId = vehicleId;
     }
 
     public String getLicensePlate() {
@@ -106,19 +108,19 @@ public class VehicleEntity {
         this.trailerHitch = trailerHitch;
     }
 
-    public Double getCostPrice() {
+    public BigDecimal  getCostPrice() {
         return costPrice;
     }
 
-    public void setCostPrice(double costPrice) {
+    public void setCostPrice(BigDecimal  costPrice) {
         this.costPrice = costPrice;
     }
 
-    public Double getSalePrice() {
+    public BigDecimal  getSalePrice() {
         return salePrice;
     }
 
-    public void setSalePrice(double salePrice) {
+    public void setSalePrice(BigDecimal salePrice) {
         this.salePrice = salePrice;
     }
 

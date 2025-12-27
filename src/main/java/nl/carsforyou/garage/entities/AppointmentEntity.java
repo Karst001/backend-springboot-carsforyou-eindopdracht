@@ -1,25 +1,30 @@
 package nl.carsforyou.garage.entities;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
 
 @Entity
-@Table(name = "Appointments")
+@Table(name = "appointments")
 public class AppointmentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long appointmentId;
-    private String appointmentDate;
+
+    private LocalDateTime appointmentDate;
     private String reasonForVisit;
-    private String completedDate;
+    private LocalDateTime completedDate;
+
     @Column(name = "vehicle_id", nullable = false)          //mandatory, cannot have appointment w/o vehicle_id
     private Long vehicleId;
+
     @Column(name = "created_by_user_id", nullable = false)  //mandatory to track who created the appointment, customer or staff
     private Long createdByUserId;
 
     public AppointmentEntity() {}
 
-    public AppointmentEntity(Long appointmentId, String appointmentDate, String reasonForVisit,
-        String completedDate, Long vehicleId, Long createdByUserId) {
+    public AppointmentEntity(Long appointmentId, LocalDateTime appointmentDate, String reasonForVisit,
+                             LocalDateTime completedDate, Long vehicleId, Long createdByUserId) {
 
         this.appointmentId = appointmentId;
         this.appointmentDate = appointmentDate;
@@ -29,7 +34,7 @@ public class AppointmentEntity {
         this.createdByUserId = createdByUserId;
     }
 
-    public long getAppointmentId() {
+    public Long getAppointmentId() {
         return appointmentId;
     }
 
@@ -37,11 +42,11 @@ public class AppointmentEntity {
         this.appointmentId = appointmentId;
     }
 
-    public String getAppointmentDate() {
+    public LocalDateTime getAppointmentDate() {
         return appointmentDate;
     }
 
-    public void setAppointmentDate(String appointmentDate) {
+    public void setAppointmentDate(LocalDateTime appointmentDate) {
         this.appointmentDate = appointmentDate;
     }
 
@@ -53,11 +58,11 @@ public class AppointmentEntity {
         this.reasonForVisit = reasonForVisit;
     }
 
-    public String getCompletedDate() {
+    public LocalDateTime getCompletedDate() {
         return completedDate;
     }
 
-    public void setCompletedDate(String completedDate) {
+    public void setCompletedDate(LocalDateTime completedDate) {
         this.completedDate = completedDate;
     }
 
