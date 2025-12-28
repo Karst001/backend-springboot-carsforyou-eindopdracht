@@ -3,7 +3,7 @@ package nl.carsforyou.garage.dtos.part;
 
 import java.math.BigDecimal;
 
-public class PartsResponseDto {
+public class PartResponseDto {
     private Long partId;
     private String itemNumber;
     private String itemDescription;

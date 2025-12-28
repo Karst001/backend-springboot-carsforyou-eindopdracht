@@ -17,6 +17,8 @@ public class AppointmentRequestDto {
     @NotNull
     private  Long vehicleId;
 
+    private Long userId;
+
 
     public LocalDateTime getAppointmentDate() {
         return appointmentDate;
@@ -48,5 +50,13 @@ public class AppointmentRequestDto {
 
     public void setVehicleId(Long vehicleId) {
         this.vehicleId = vehicleId;
+    }
+
+    public Long getCreatedByUserId() {
+        return userId;
+    }
+
+    public void setCreatedByUserId(Long createdByUserId) {
+        this.userId = createdByUserId;
     }
 }
