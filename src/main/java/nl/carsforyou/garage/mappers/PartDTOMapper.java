@@ -11,6 +11,7 @@ public class PartDTOMapper implements EntityDtoMapper<PartEntity, PartRequestDto
     @Override
     public PartResponseDto mapToDto(PartEntity partEntity) {
         PartResponseDto response = new PartResponseDto();
+        
         response.setPartId(partEntity.getPartId());
         response.setItemNumber(partEntity.getItemNumber());
         response.setItemDescription(partEntity.getItemDescription());

@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.time.LocalDateTime;
+
 public class UserRequestDto {
     @NotNull
     @Email
@@ -17,6 +19,8 @@ public class UserRequestDto {
     @NotNull
     private String userRole;
 
+    private LocalDateTime signupDate;
+    private LocalDateTime lastSigninDate;
 
     public String getEmailAddress() {
         return emailAddress;
@@ -40,5 +44,21 @@ public class UserRequestDto {
 
     public void setUserRole(String userRole) {
         this.userRole = userRole;
+    }
+
+    public LocalDateTime getSignupDate() {
+        return signupDate;
+    }
+
+    public void setSignupDate(LocalDateTime signupDate) {
+        this.signupDate = signupDate;
+    }
+
+    public LocalDateTime getLastSigninDate() {
+        return lastSigninDate;
+    }
+
+    public void setLastSigninDate(LocalDateTime lastSigninDate) {
+        this.lastSigninDate = lastSigninDate;
     }
 }

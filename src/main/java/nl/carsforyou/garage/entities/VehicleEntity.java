@@ -100,7 +100,7 @@ public class VehicleEntity {
         this.bodyStyle = bodyStyle;
     }
 
-    public Boolean isTrailerHitch() {
+    public Boolean getTrailerHitch() {
         return trailerHitch;
     }
 
