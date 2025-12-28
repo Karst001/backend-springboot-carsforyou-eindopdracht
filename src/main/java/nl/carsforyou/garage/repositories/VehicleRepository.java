@@ -1,5 +1,8 @@
 // Repository -> returns entities
 package nl.carsforyou.garage.repositories;
 
-public class VehicleRepository {
+import nl.carsforyou.garage.entities.VehicleEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface VehicleRepository extends JpaRepository<VehicleEntity, Integer> {
 }
