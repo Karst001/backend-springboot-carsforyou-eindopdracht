@@ -1,5 +1,8 @@
 // Repository -> returns entities
 package nl.carsforyou.garage.repositories;
 
-public class ServiceOrderPartRepository {
+import nl.carsforyou.garage.entities.ServiceOrderPartEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ServiceOrderPartRepository extends JpaRepository<ServiceOrderPartEntity, Integer> {
 }

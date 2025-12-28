@@ -1,5 +1,8 @@
 // Repository -> returns entities
 package nl.carsforyou.garage.repositories;
 
-public class AppointmentRepository {
+import nl.carsforyou.garage.entities.AppointmentEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface AppointmentRepository extends JpaRepository<AppointmentEntity, Long> {
 }
