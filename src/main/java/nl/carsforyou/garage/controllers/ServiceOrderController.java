@@ -31,7 +31,7 @@ public class ServiceOrderController {
     @Operation(summary = "Get all service-orders")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "List of service-orders returned")})
     @GetMapping
-    public List<ServiceOrderResponseDto> getAllCustomers() {
+    public List<ServiceOrderResponseDto> getAllServiceOrders() {
         return serviceOrderService.getAllServiceOrders();
     }
 
