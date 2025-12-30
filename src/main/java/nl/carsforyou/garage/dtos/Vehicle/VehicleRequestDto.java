@@ -1,22 +1,23 @@
 // Used to receive data from client during CRUD, contains fields that the client is allowed to send
 package nl.carsforyou.garage.dtos.Vehicle;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 
 import java.math.BigDecimal;
 
 public class VehicleRequestDto {
-    @NotNull
+    @NotBlank
     private String licensePlate;
 
-    @NotNull
+    @NotBlank
     private String vinNumber;
 
-    @NotNull
+    @NotBlank
     private String make;
 
-    @NotNull
+    @NotBlank
     private String model;
 
     //optional
