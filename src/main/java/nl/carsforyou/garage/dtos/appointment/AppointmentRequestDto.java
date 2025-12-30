@@ -1,7 +1,10 @@
 // Used to receive data from client during CRUD, contains fields that the client is allowed to send
 package nl.carsforyou.garage.dtos.appointment;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
+
 import java.time.LocalDateTime;
 
 public class AppointmentRequestDto {
@@ -9,15 +12,18 @@ public class AppointmentRequestDto {
 
     @NotNull
     private LocalDateTime appointmentDate;
-    @NotNull
+    @NotBlank
     private  String reasonForVisit;
 
+    //don't want user to set a completed date while creating an appointment
+    @Null(message = "completedDate must be null when creating an appointment")
     private  LocalDateTime completedDate;
 
     @NotNull
     private  Long vehicleId;
 
-    private Long userId;
+    // mandatory to track who created the appointment, customer or employee
+    private Long createdByUserId;
 
 
     public LocalDateTime getAppointmentDate() {
@@ -53,10 +59,10 @@ public class AppointmentRequestDto {
     }
 
     public Long getCreatedByUserId() {
-        return userId;
+        return createdByUserId;
     }
 
     public void setCreatedByUserId(Long createdByUserId) {
-        this.userId = createdByUserId;
+        this.createdByUserId = createdByUserId;
     }
 }

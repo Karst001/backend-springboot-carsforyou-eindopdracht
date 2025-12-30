@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
-
 @Service
 public class AppointmentService {
     private final AppointmentRepository appointmentRepository;
@@ -38,6 +37,15 @@ public class AppointmentService {
     public AppointmentResponseDto createAppointment(AppointmentRequestDto dto) {
         //store passed DTO in entityMapper
         AppointmentEntity entity = appointmentDTOMapper.mapToEntity(dto);
+
+        // cannot be completed at creation time, only during update
+        entity.setCompletedDate(null);
+
+        //validate the appointment date, cannot be prior to today's date
+        DateValidationUtil.validateNotInPast(
+                dto.getAppointmentDate(),
+                "appointmentDate"
+        );
 
         //save to repository and return saved data
         AppointmentEntity saved = appointmentRepository.save(entity);
