@@ -11,6 +11,17 @@ public class CustomerUploadResponseDto {
     private String fileName;                //this is just the reference to the file location, not the binary data
     private LocalDateTime uploadDate;
 
+    public CustomerUploadResponseDto() {}
+
+    public CustomerUploadResponseDto(Long uploadId, Long customerId, String filePath, String fileType, String fileName, LocalDateTime uploadDate) {
+        this.uploadId = uploadId;
+        this.customerId = customerId;
+        this.filePath = filePath;
+        this.fileType = fileType;
+        this.fileName = fileName;
+        this.uploadDate = uploadDate;
+    }
+
     public Long getUploadId() {
         return uploadId;
     }
