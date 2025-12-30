@@ -4,5 +4,5 @@ package nl.carsforyou.garage.repositories;
 import nl.carsforyou.garage.entities.ServiceOrderPartEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ServiceOrderPartRepository extends JpaRepository<ServiceOrderPartEntity, Integer> {
+public interface ServiceOrderPartRepository extends JpaRepository<ServiceOrderPartEntity, Long> {
 }
