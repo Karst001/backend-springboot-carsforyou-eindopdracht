@@ -8,16 +8,20 @@ public class DateValidationUtil {
 //    private DateValidationUtil() {}
 
     //helper to check if the selecfted date is prior to todays date for example or a completed date is prior to start date
-    public static void validateDateOrder(
-            LocalDateTime start,
-            LocalDateTime end,
-            String startDateName,
-            String endDateName
-    ) {
+    public static void validateDateOrder(LocalDateTime start, LocalDateTime end, String startDateName, String endDateName) {
         if (start != null && end != null && end.isBefore(start)) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
                     endDateName + " cannot be before " + startDateName
+            );
+        }
+    }
+
+    public static void validateNotInPast(LocalDateTime date, String fieldName) {
+        if (date != null && date.isBefore(LocalDateTime.now())) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    fieldName + " cannot be in the past"
             );
         }
     }

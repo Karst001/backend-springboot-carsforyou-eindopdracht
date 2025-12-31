@@ -1,6 +1,9 @@
 package nl.carsforyou.garage.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
 import java.time.LocalDateTime;
 
 
@@ -15,10 +18,13 @@ public class AppointmentEntity {
     private String reasonForVisit;
     private LocalDateTime completedDate;
 
-    @Column(name = "vehicle_id", nullable = false)          //mandatory, cannot have appointment w/o vehicle_id
+    @NotNull
+    @Positive
+    @Column(name = "vehicle_id")          //mandatory, cannot have appointment w/o vehicle_id
     private Long vehicleId;
 
-    @Column(name = "created_by_user_id", nullable = false)  //mandatory to track who created the appointment, customer or staff
+    @Positive
+    @Column(name = "created_by_user_id")  //mandatory to track who created the appointment, customer or staff
     private Long createdByUserId;
 
     public AppointmentEntity() {}
