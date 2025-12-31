@@ -4,6 +4,7 @@ package nl.carsforyou.garage.services;
 import nl.carsforyou.garage.dtos.part.PartRequestDto;
 import nl.carsforyou.garage.dtos.part.PartResponseDto;
 import nl.carsforyou.garage.entities.PartEntity;
+import nl.carsforyou.garage.entities.UserEntity;
 import nl.carsforyou.garage.mappers.PartDTOMapper;
 import nl.carsforyou.garage.repositories.PartRepository;
 import org.springframework.http.HttpStatus;
@@ -59,5 +60,14 @@ public class PartService {
         //save to repository and return saved data
         PartEntity saved = partRepository.save(existing);
         return partDTOMapper.mapToDto(saved);
+    }
+
+    public void deletePart(Long id) {
+        PartEntity user = partRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Part with Id " + id + " was not found"));
+
+        //only delete if id did not throw an exception
+        partRepository.delete(user);
     }
 }
