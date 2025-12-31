@@ -9,13 +9,18 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
+
     @Column(name = "email_address", nullable = false)
     private String emailAddress;
+
     @Column(name = "signup_date", nullable = false)
     private LocalDateTime signupDate;
+
     private LocalDateTime lastSigninDate;
+
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;
+
     @Column(name = "user_role", nullable = false)
     private String userRole;
 

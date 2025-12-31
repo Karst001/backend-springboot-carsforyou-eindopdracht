@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Tag(name = "ServiceOrders", description = "Endpoints for ServiceOrders")
+@Tag(name = "ServiceOrders")
 @RestController
 @RequestMapping("/serviceorders")
 public class ServiceOrderController {

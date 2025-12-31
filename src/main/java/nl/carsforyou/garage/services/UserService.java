@@ -3,14 +3,8 @@ package nl.carsforyou.garage.services;
 
 import nl.carsforyou.garage.dtos.User.UserRequestDto;
 import nl.carsforyou.garage.dtos.User.UserResponseDto;
-import nl.carsforyou.garage.dtos.appointment.AppointmentRequestDto;
-import nl.carsforyou.garage.dtos.appointment.AppointmentResponseDto;
-import nl.carsforyou.garage.entities.AppointmentEntity;
 import nl.carsforyou.garage.entities.UserEntity;
-import nl.carsforyou.garage.helpers.DateValidationUtil;
-import nl.carsforyou.garage.mappers.AppointmentDTOMapper;
 import nl.carsforyou.garage.mappers.UserDTOMapper;
-import nl.carsforyou.garage.repositories.AppointmentRepository;
 import nl.carsforyou.garage.repositories.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -32,7 +26,7 @@ public class UserService {
         return userDTOMapper.mapToDtoList(userRepository.findAll());
     }
 
-    public UserResponseDto getuserById(Long id) {
+    public UserResponseDto getUserById(Long id) {
         UserEntity user = userRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "User with Id " + id + " was not found"));
@@ -40,7 +34,7 @@ public class UserService {
         return userDTOMapper.mapToDto(user);
     }
 
-    public UserResponseDto createAppointment(UserRequestDto dto) {
+    public UserResponseDto createUser(UserRequestDto dto) {
         //store passed DTO in entityMapper
         UserEntity entity = userDTOMapper.mapToEntity(dto);
 
@@ -52,7 +46,7 @@ public class UserService {
     public UserResponseDto updateUser(Long id, UserRequestDto dto) {
         UserEntity existing = userRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Appointment with Id " + id + " was not found"));
+                        "User with Id " + id + " was not found"));
 
         //if no errors, set values that were passed from dto
         existing.setEmailAddress(dto.getEmailAddress());
