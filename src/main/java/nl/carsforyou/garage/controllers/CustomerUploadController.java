@@ -18,7 +18,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.multipart.MultipartFile;
 
-@Tag(name = "CustomerUploads", description = "Endpoints for Customer file uploads")
+@Tag(name = "CustomerUploads")
 @RestController
 @RequestMapping("/customeruploads")
 public class CustomerUploadController {

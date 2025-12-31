@@ -9,18 +9,15 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import nl.carsforyou.garage.dtos.customer.CustomerRequestDto;
-import nl.carsforyou.garage.dtos.customer.CustomerResponseDto;
 import nl.carsforyou.garage.dtos.part.PartRequestDto;
 import nl.carsforyou.garage.dtos.part.PartResponseDto;
-import nl.carsforyou.garage.services.CustomerUploadService;
 import nl.carsforyou.garage.services.PartService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Tag(name = "Parts", description = "Endpoints for Parts")
+@Tag(name = "Parts")
 @RestController
 @RequestMapping("/parts")
 public class PartController {

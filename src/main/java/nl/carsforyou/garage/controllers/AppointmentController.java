@@ -18,7 +18,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "Appointments", description = "Endpoints for Appointments")
+@Tag(name = "Appointments")
 @RestController
 @RequestMapping("/appointments")
 public class AppointmentController {
