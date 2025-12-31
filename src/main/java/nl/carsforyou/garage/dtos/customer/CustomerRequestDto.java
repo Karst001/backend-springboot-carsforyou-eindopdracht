@@ -1,16 +1,17 @@
 // Used to receive data from client during CRUD, contains fields that the client is allowed to send
 package nl.carsforyou.garage.dtos.customer;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public class CustomerRequestDto {
     // customerId is generated in database
 
-    @NotNull
+    @NotBlank
     private String firstName;
 
-    @NotNull
+    @NotBlank
     private String lastName;
 
     //not mandatory for a walk-in customer
@@ -20,7 +21,7 @@ public class CustomerRequestDto {
     private String telephoneNumber;
     private String country;
 
-    @NotNull
+    @NotBlank
     private String emailAddress;
 
     private Long userId;

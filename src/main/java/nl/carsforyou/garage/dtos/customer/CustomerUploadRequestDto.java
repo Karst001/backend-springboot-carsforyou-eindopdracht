@@ -1,6 +1,7 @@
 // Used to receive data from client during CRUD, contains fields that the client is allowed to send
 package nl.carsforyou.garage.dtos.customer;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public class CustomerUploadRequestDto {
@@ -12,6 +13,8 @@ public class CustomerUploadRequestDto {
     private Long customerId;
 
     private String fileType;
+
+    @NotBlank
     private String fileName;  //file, PNG, PDF, etc  will be saved on the server, not in database
 
     public Long getCustomerId() {

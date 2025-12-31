@@ -1,6 +1,10 @@
 package nl.carsforyou.garage.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
 import java.time.LocalDateTime;
 
 
@@ -9,16 +13,26 @@ import java.time.LocalDateTime;
 public class CustomerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long customerId;
+
+    @NotBlank
     private String firstName;
+    @NotBlank
     private String lastName;
+    @NotBlank
     private String address;
+
     private String zipCode;
     private String city;
     private String country;
+
+    @NotBlank
     private String telephoneNumber;
+
     @Column(name = "email_address", nullable = false, unique = true)    //unique because it's the key between Customers and Users
     private String emailAddress;
+
     @Column(name = "user_id", nullable = true)                          //nullable because a customer may not be a user like walk-in customers do not visit via web-api
     private Long userId;
     private LocalDateTime newsletterSignupDate;
