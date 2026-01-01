@@ -3,8 +3,10 @@ package nl.carsforyou.garage.services;
 import jakarta.transaction.Transactional;
 import nl.carsforyou.garage.dtos.customer.CustomerUploadRequestDto;
 import nl.carsforyou.garage.dtos.customer.CustomerUploadResponseDto;
+import nl.carsforyou.garage.entities.CustomerEntity;
 import nl.carsforyou.garage.entities.CustomerUploadEntity;
 import nl.carsforyou.garage.mappers.CustomerUploadDTOMapper;
+import nl.carsforyou.garage.repositories.CustomerRepository;
 import nl.carsforyou.garage.repositories.CustomerUploadRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -26,13 +28,15 @@ public class CustomerUploadService {
     private final CustomerUploadRepository customerUploadRepository;
     private final CustomerUploadDTOMapper customerUploadDTOMapper;
     private final Path uploadRoot;
+    private final CustomerRepository customerRepository;
 
     public CustomerUploadService(CustomerUploadRepository customerUploadRepository,
-            CustomerUploadDTOMapper customerUploadDTOMapper, @Value("${garage.upload-dir}") String uploadDir) {
+                                 CustomerUploadDTOMapper customerUploadDTOMapper, @Value("${garage.upload-dir}") String uploadDir, CustomerRepository customerRepository) {
         this.customerUploadRepository = customerUploadRepository;
         this.customerUploadDTOMapper = customerUploadDTOMapper;
 
         this.uploadRoot = Paths.get(uploadDir);
+        this.customerRepository = customerRepository;
     }
 
     public List<CustomerUploadResponseDto> getAllCustomerUploads() {
@@ -88,21 +92,25 @@ public class CustomerUploadService {
         CustomerUploadRequestDto dto = new CustomerUploadRequestDto();
         dto.setCustomerId(customerId);
         dto.setFileType(fileType);
-        dto.setFileName(
-                Path.of(Objects.requireNonNull(file.getOriginalFilename()))
-                        .getFileName()
-                        .toString()
-        );
+        dto.setFileName(fileName);
 
         //Map the DTO to  entity
         CustomerUploadEntity entity = customerUploadDTOMapper.mapToEntity(dto);
 
         //Update server-generated fields
         entity.setUploadDate(LocalDateTime.now());
-        entity.setFilePath("/uploads/customers/" + customerId + "/" + dto.getFileName());
+        entity.setFilePath(targetFile.toString());  //this stores like 'C:\temp\customers\1\{filename}'
+
+        //create the relation between Customer and CustomerUpload
+        CustomerEntity customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found"));
+        //set the relation
+        entity.setCustomer(customer);
 
         //save
         CustomerUploadEntity saved = customerUploadRepository.save(entity);
+
+        System.out.println("Saved uploadId = " + saved.getUploadId() + ", file: " + fileName);
 
         return customerUploadDTOMapper.mapToDto(saved);
     }

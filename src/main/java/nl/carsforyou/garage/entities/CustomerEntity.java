@@ -1,10 +1,11 @@
 package nl.carsforyou.garage.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-
 import java.time.LocalDateTime;
-
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "customers")
@@ -50,6 +51,14 @@ public class CustomerEntity {
     @OneToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", unique = true)
     private UserEntity user;
+
+
+    //as per database diagran, one-to-many relation
+    //so, one customer can have many uploads.
+    @JsonIgnore
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+    private List<CustomerUploadEntity> uploads = new ArrayList<>();
+
 
     public CustomerEntity() {}
 
@@ -166,5 +175,14 @@ public class CustomerEntity {
 
     public void setUser(UserEntity user) {
         this.user = user;
+    }
+
+    //added getters/setters for the relation to CustomerUploads
+    public List<CustomerUploadEntity> getUploads() {
+        return uploads;
+    }
+
+    public void setUploads(List<CustomerUploadEntity> uploads) {
+        this.uploads = uploads;
     }
 }
