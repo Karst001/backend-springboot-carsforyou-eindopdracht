@@ -2,8 +2,6 @@ package nl.carsforyou.garage.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 
 import java.time.LocalDateTime;
 
@@ -13,29 +11,45 @@ import java.time.LocalDateTime;
 public class CustomerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
+    @Column(name = "customer_id")
     private Long customerId;
 
     @NotBlank
+    @Column(name = "first_name")
     private String firstName;
     @NotBlank
+    @Column(name = "last_name")
     private String lastName;
     @NotBlank
     private String address;
 
+    @Column(name = "zip_code")
     private String zipCode;
+    @Column(name = "city")
     private String city;
+    @Column(name = "country")
     private String country;
 
     @NotBlank
+    @Column(name = "telephone_number")
     private String telephoneNumber;
 
     @Column(name = "email_address", nullable = false, unique = true)    //unique because it's the key between Customers and Users
     private String emailAddress;
 
-    @Column(name = "user_id", nullable = true)                          //nullable because a customer may not be a user like walk-in customers do not visit via web-api
+    @Column(name = "user_id", nullable = true, insertable = false, updatable = false)   //nullable because a customer may not be a user like walk-in customers do not visit via web-api
     private Long userId;
+    @Column(name = "newsletter_signup_date")
     private LocalDateTime newsletterSignupDate;
+
+
+    //one-to-one relation (owning side):
+    //this side has the FK column (customers.user_id) so it is the owner of this relation
+    //Optional=true is used because walk-in customers may not have a User account, they did not use the API
+    //unique=true because the database diagram shows a one-to-one mapping, a user can't belong to multiple customers).
+    @OneToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", unique = true)
+    private UserEntity user;
 
     public CustomerEntity() {}
 
@@ -56,7 +70,7 @@ public class CustomerEntity {
         this.newsletterSignupDate = newsletterSignupDate;
     }
 
-
+    //the base getters/setters
     public Long getCustomerId() {
         return customerId;
     }
@@ -143,5 +157,14 @@ public class CustomerEntity {
 
     public void setNewsletterSignupDate(LocalDateTime newsletterSignupDate) {
         this.newsletterSignupDate = newsletterSignupDate;
+    }
+
+    // added getters/setters for the relational table User
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 }
