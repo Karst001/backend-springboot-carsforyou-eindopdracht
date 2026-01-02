@@ -7,7 +7,11 @@ VALUES ('ad@test.com', '2025-12-26', now(), 'hashed', 'Admin'),
 
 --create customers
 INSERT INTO customers (first_name, last_name, address, zip_code, city, country, telephone_number, email_address, user_id, newsletter_signup_date)
-VALUES ('Ad', 'Karsten', 'Hoofdstraat 43', '7742LR', 'Den Haag', 'Nederland', '06-12345678', 'ad@test.com', null, null),
+VALUES ('Ad', 'Karsten', 'Hoofdstraat 43', '7742LR', 'Den Haag', 'Nederland', '06-12345678', 'ad@test.com',
+        (SELECT user_id
+         FROM users
+         WHERE email_address = 'ad@test.com'), null
+       ),
        ('Tommy', 'Jansen', 'Kerkstraat 12', '2513 KL', 'Alphen a/d Rijn', 'Nederland', '06-12345678', 'piet@test.com', null, null),
        ('Arjan', 'van dijk', 'Langestraat 23', '5623 KD', 'Eindhoven', 'Nederland', '06-12345678', 'arjan@test.com',
        (SELECT user_id
@@ -51,7 +55,10 @@ INSERT INTO appointments (appointment_date, reason_for_visit, vehicle_id, create
         AND c.last_name  = 'Karsten'
         AND v.license_plate = 'GZ-00-HG';
 
-
+--create service orders
+INSERT INTO service_orders (service_completed_date, vehicle_id)
+VALUES ('2025-12-05', 1),
+       (null, 2);
 
 
 

@@ -14,8 +14,11 @@ public class AppointmentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long appointmentId;
 
+    @Column(name = "appointment_date")
     private LocalDateTime appointmentDate;
+    @Column(name = "reason_for_visit")
     private String reasonForVisit;
+    @Column(name = "completed_date")
     private LocalDateTime completedDate;
 
     @NotNull
@@ -24,8 +27,15 @@ public class AppointmentEntity {
     private Long vehicleId;
 
     @Positive
-    @Column(name = "created_by_user_id")  //mandatory to track who created the appointment, customer or staff
+    @Column(name = "created_by_user_id", nullable = true, insertable=false, updatable=false)  //mandatory to track who created the appointment, customer or staff
     private Long createdByUserId;
+
+    //As per the database diagram this is a many-to-one relation:
+    //Many appointments can be created by one user
+    //I am using optional = true because some appointments can be walk-in, not through the API
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "created_by_user_id", referencedColumnName = "user_id")
+    private UserEntity createdByUser;
 
     public AppointmentEntity() {}
 
@@ -40,6 +50,7 @@ public class AppointmentEntity {
         this.createdByUserId = createdByUserId;
     }
 
+    //base getters/setters
     public Long getAppointmentId() {
         return appointmentId;
     }
@@ -86,5 +97,10 @@ public class AppointmentEntity {
 
     public void setCreatedByUserId(Long createdByUserId) {
         this.createdByUserId = createdByUserId;
+    }
+
+    //set the relation to define who created the appointment
+    public void setCreatedByUser(UserEntity createdByUser) {
+        this.createdByUser = createdByUser;
     }
 }
