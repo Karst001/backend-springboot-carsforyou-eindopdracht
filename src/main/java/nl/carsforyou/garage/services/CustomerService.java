@@ -2,13 +2,17 @@
 package nl.carsforyou.garage.services;
 
 import jakarta.transaction.Transactional;
+import nl.carsforyou.garage.dtos.Vehicle.VehicleResponseDto;
 import nl.carsforyou.garage.dtos.customer.CustomerRequestDto;
 import nl.carsforyou.garage.dtos.customer.CustomerResponseDto;
 import nl.carsforyou.garage.entities.CustomerEntity;
 import nl.carsforyou.garage.entities.CustomerUploadEntity;
+import nl.carsforyou.garage.entities.VehicleEntity;
 import nl.carsforyou.garage.mappers.CustomerDTOMapper;
+import nl.carsforyou.garage.mappers.VehicleDTOMapper;
 import nl.carsforyou.garage.repositories.CustomerRepository;
 import nl.carsforyou.garage.repositories.CustomerUploadRepository;
+import nl.carsforyou.garage.repositories.VehicleRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -23,11 +27,15 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
     private final CustomerDTOMapper customerDTOMapper;
     private final CustomerUploadRepository customerUploadRepository;
+    private final VehicleRepository vehicleRepository;
+    private final VehicleDTOMapper vehicleDTOMapper;
 
-    public CustomerService(CustomerRepository customerRepository, CustomerDTOMapper customerDTOMapper, CustomerUploadRepository customerUploadRepository) {
+    public CustomerService(CustomerRepository customerRepository, CustomerDTOMapper customerDTOMapper, CustomerUploadRepository customerUploadRepository, VehicleRepository vehicleRepository, VehicleDTOMapper vehicleDTOMapper) {
         this.customerRepository = customerRepository;
         this.customerDTOMapper = customerDTOMapper;
         this.customerUploadRepository = customerUploadRepository;
+        this.vehicleRepository = vehicleRepository;
+        this.vehicleDTOMapper = vehicleDTOMapper;
     }
 
     public List<CustomerResponseDto> getAllCustomers() {
@@ -42,6 +50,24 @@ public class CustomerService {
 
         return customerDTOMapper.mapToDto(customer);
     }
+
+
+    public List<VehicleResponseDto> getVehiclesForCustomer(Long customerId) {
+        //check if customer exists
+        if (!customerRepository.existsById(customerId)) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Customer with Id " + customerId + " was not found");
+        }
+
+        //build the list of vehicles
+        List<VehicleEntity> vehicles = vehicleRepository.findAllByCustomer_CustomerId(customerId);
+
+        //map to Dto and return
+        return vehicles.stream()
+                .map(vehicleDTOMapper::mapToDto)
+                .toList();
+    }
+
 
     public CustomerResponseDto createCustomer(CustomerRequestDto dto) {
         //store passed DTO in entityMapper
@@ -80,7 +106,17 @@ public class CustomerService {
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "Customer with Id " + id + " was not found"));
 
-        //since i now have a relation between Customers and CustomerUploads i need to clean up the relations on delete
+
+        //check if Vehicle is related to this customer, if true, cannot delete
+        if (vehicleRepository.existsByCustomer_CustomerId(id)) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Cannot delete Customer " + id + " because vehicles exist"
+            );
+        }
+
+
+        //since there is a relation between Customers and CustomerUploads i need to clean up the relations on delete
         //Also add logic that will delete the file from disk as it was stored on disk using uploadCreate
         //Get all uploads for this customer
         List<CustomerUploadEntity> uploads = customerUploadRepository.findAllByCustomer_CustomerId(id);

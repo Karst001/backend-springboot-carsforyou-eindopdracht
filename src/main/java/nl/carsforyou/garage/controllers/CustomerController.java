@@ -2,6 +2,8 @@
 package nl.carsforyou.garage.controllers;
 
 import jakarta.validation.Valid;
+import nl.carsforyou.garage.dtos.ServiceOrder.ServiceOrderResponseDto;
+import nl.carsforyou.garage.dtos.Vehicle.VehicleResponseDto;
 import nl.carsforyou.garage.dtos.customer.CustomerRequestDto;
 import nl.carsforyou.garage.dtos.customer.CustomerResponseDto;
 import nl.carsforyou.garage.services.CustomerService;
@@ -45,6 +47,18 @@ public class CustomerController {
     @GetMapping("/{id}")
     public CustomerResponseDto getCustomerById(@Parameter(description = "Customer id", example = "1") @PathVariable Long id) {
         return customerService.getCustomerById(id);
+    }
+
+
+    // GET /customer/{id}/vehicles
+    @Operation(summary = "Get list of Vehicles for a customer")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Customer not found"),
+            @ApiResponse(responseCode = "404", description = "Customer not found, check the {id}", content = @Content)
+    })
+    @GetMapping("/{id}/vehicles")
+    public List<VehicleResponseDto> getVehicles(@PathVariable Long id) {
+        return customerService.getVehiclesForCustomer(id);
     }
 
 

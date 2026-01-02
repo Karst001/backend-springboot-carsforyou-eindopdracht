@@ -18,16 +18,21 @@ public class CustomerEntity {
     @NotBlank
     @Column(name = "first_name")
     private String firstName;
+
     @NotBlank
     @Column(name = "last_name")
     private String lastName;
+
     @NotBlank
+    @Column(name = "address")
     private String address;
 
     @Column(name = "zip_code")
     private String zipCode;
+
     @Column(name = "city")
     private String city;
+
     @Column(name = "country")
     private String country;
 
@@ -40,6 +45,7 @@ public class CustomerEntity {
 
     @Column(name = "user_id", nullable = true, insertable = false, updatable = false)   //nullable because a customer may not be a user like walk-in customers do not visit via web-api
     private Long userId;
+
     @Column(name = "newsletter_signup_date")
     private LocalDateTime newsletterSignupDate;
 
@@ -58,6 +64,12 @@ public class CustomerEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private List<CustomerUploadEntity> uploads = new ArrayList<>();
+
+
+    //as per the database diagram, one customer can own many vehicles
+    @JsonIgnore
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+    private List<VehicleEntity> vehicles = new ArrayList<>();
 
 
     public CustomerEntity() {}
@@ -184,5 +196,13 @@ public class CustomerEntity {
 
     public void setUploads(List<CustomerUploadEntity> uploads) {
         this.uploads = uploads;
+    }
+
+    public List<VehicleEntity> getVehicles() {
+        return vehicles;
+    }
+
+    public void setVehicles(List<VehicleEntity> vehicles) {
+        this.vehicles = vehicles;
     }
 }

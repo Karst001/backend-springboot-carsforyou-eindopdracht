@@ -8,4 +8,7 @@ import java.util.List;
 
 public interface AppointmentRepository extends JpaRepository<AppointmentEntity, Long> {
     List<AppointmentEntity> findAllByCreatedByUser_UserId(Long userId);
+
+    //check if appointment exists when deleting a vehicle
+    boolean existsByVehicle_VehicleId(Long vehicleId);
 }

@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import nl.carsforyou.garage.dtos.ServiceOrder.ServiceOrderResponseDto;
 import nl.carsforyou.garage.dtos.Vehicle.VehicleRequestDto;
 import nl.carsforyou.garage.dtos.Vehicle.VehicleResponseDto;
 import nl.carsforyou.garage.services.VehicleService;
@@ -44,6 +45,17 @@ public class VehicleController {
     @GetMapping("/{id}")
     public VehicleResponseDto getVehicleById(@Parameter(description = "Customer id", example = "1") @PathVariable Long id) {
         return vehicleService.getVehicleById(id);
+    }
+
+    // GET /vehicles/{id}/serviceorders
+    @Operation(summary = "Get list of ServiceOrders for a vehicle")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Vehicle not found"),
+            @ApiResponse(responseCode = "404", description = "Vehicle not found, check the {id}", content = @Content)
+    })
+    @GetMapping("/{id}/serviceorders")
+    public List<ServiceOrderResponseDto> getServiceOrders(@PathVariable Long id) {
+        return vehicleService.getServiceOrdersForVehicle(id);
     }
 
 

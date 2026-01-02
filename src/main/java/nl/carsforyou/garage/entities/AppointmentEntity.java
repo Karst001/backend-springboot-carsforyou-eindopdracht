@@ -1,5 +1,6 @@
 package nl.carsforyou.garage.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -12,19 +13,31 @@ import java.time.LocalDateTime;
 public class AppointmentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "appointment_id")
     private Long appointmentId;
 
     @Column(name = "appointment_date")
     private LocalDateTime appointmentDate;
+
     @Column(name = "reason_for_visit")
     private String reasonForVisit;
+
     @Column(name = "completed_date")
     private LocalDateTime completedDate;
 
-    @NotNull
-    @Positive
-    @Column(name = "vehicle_id")          //mandatory, cannot have appointment w/o vehicle_id
+
+    //as per database diagram, one vehicle can have many appointments
+    //each appointment belongs to one vehicle only, the VehicleId in cannot be null
+    @Column(name = "vehicle_id", nullable = false, insertable = false, updatable = false)
     private Long vehicleId;
+
+
+    //many-to-one relation, this is the owner of the relation
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "vehicle_id", referencedColumnName = "vehicle_id")
+    private VehicleEntity vehicle;
+
 
     @Positive
     @Column(name = "created_by_user_id", nullable = true, insertable=false, updatable=false)  //mandatory to track who created the appointment, customer or staff
@@ -102,5 +115,14 @@ public class AppointmentEntity {
     //set the relation to define who created the appointment
     public void setCreatedByUser(UserEntity createdByUser) {
         this.createdByUser = createdByUser;
+    }
+
+    //getters/setters for the vehicle
+    public VehicleEntity getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(VehicleEntity vehicle) {
+        this.vehicle = vehicle;
     }
 }
