@@ -1,5 +1,6 @@
 package nl.carsforyou.garage.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -11,7 +12,7 @@ public class CustomerUploadEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long uploadId;
 
-    @Column(name = "customer_id", nullable = false)
+    @Column(name = "customer_id", nullable = false, insertable = false, updatable = false)
     private Long customerId;
 
     @Column(name = "file_path", nullable = false)
@@ -25,6 +26,15 @@ public class CustomerUploadEntity {
 
     private LocalDateTime uploadDate;
 
+    //as per database diagram, CustomerUploads (owner of the relation) is a many-to-one relation to Customers
+    //So many uploads belong to one customer
+    //The FK column is customer_uploads.customer_id
+    //@JsonIgnore avoids infinite recursion if entities are ever serialized.
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
+    private CustomerEntity customer;
+
     public CustomerUploadEntity() {}
 
     public CustomerUploadEntity(Long uploadId, Long customerId, String filePath,
@@ -37,6 +47,7 @@ public class CustomerUploadEntity {
         this.uploadDate = uploadDate;
     }
 
+    //base getters/setters
     public Long getUploadId() {
         return uploadId;
     }
@@ -83,5 +94,14 @@ public class CustomerUploadEntity {
 
     public void setUploadDate(LocalDateTime uploadDate) {
         this.uploadDate = uploadDate;
+    }
+
+    //added to get Customer details
+    public CustomerEntity getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(CustomerEntity customer) {
+        this.customer = customer;
     }
 }
