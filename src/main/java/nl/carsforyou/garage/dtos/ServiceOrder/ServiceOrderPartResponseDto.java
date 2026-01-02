@@ -5,10 +5,11 @@ import java.math.BigDecimal;
 
 public class ServiceOrderPartResponseDto {
     private Long serviceOrderPartId;
-    private Long serviceId;                 //Foreign key to ServiceOrder
+    private Long serviceOrderId;            //Foreign key to ServiceOrder
     private Long partId;                    //Foreign key to Parts
     private BigDecimal unitCost;            //history unitCost
     private BigDecimal unitPrice;           //history unitPrice
+
     private int qtyUsed;
 
     public Long getServiceOrderPartId() {
@@ -19,12 +20,12 @@ public class ServiceOrderPartResponseDto {
         this.serviceOrderPartId = serviceOrderPartId;
     }
 
-    public Long getServiceId() {
-        return serviceId;
+    public Long getServiceOrderId() {
+        return serviceOrderId;
     }
 
-    public void setServiceId(Long serviceId) {
-        this.serviceId = serviceId;
+    public void setServiceOrderId(Long serviceOrderId) {
+        this.serviceOrderId = serviceOrderId;
     }
 
     public Long getPartId() {
