@@ -6,6 +6,7 @@ import nl.carsforyou.garage.dtos.ServiceOrder.ServiceOrderResponseDto;
 import nl.carsforyou.garage.entities.ServiceOrderEntity;
 import nl.carsforyou.garage.helpers.DateValidationUtil;
 import nl.carsforyou.garage.mappers.ServiceOrderDTOMapper;
+import nl.carsforyou.garage.repositories.ServiceOrderPartRepository;
 import nl.carsforyou.garage.repositories.ServiceOrderRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,11 +20,12 @@ import static java.time.LocalDateTime.now;
 public class ServiceOrderService {
     private final ServiceOrderRepository serviceOrderRepository;
     private final ServiceOrderDTOMapper serviceOrderDTOMapper;
+    private final ServiceOrderPartRepository serviceOrderPartRepository;
 
-
-    public ServiceOrderService(ServiceOrderRepository serviceOrderRepository, ServiceOrderDTOMapper serviceOrderDTOMapper) {
+    public ServiceOrderService(ServiceOrderRepository serviceOrderRepository, ServiceOrderDTOMapper serviceOrderDTOMapper, ServiceOrderPartRepository serviceOrderPartRepository) {
         this.serviceOrderRepository = serviceOrderRepository;
         this.serviceOrderDTOMapper = serviceOrderDTOMapper;
+        this.serviceOrderPartRepository = serviceOrderPartRepository;
     }
 
     public List<ServiceOrderResponseDto> getAllServiceOrders() {
@@ -74,6 +76,14 @@ public class ServiceOrderService {
         ServiceOrderEntity serverOrder = serviceOrderRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "ServiceOrder with Id " + id + " was not found"));
+
+        //check if parts exists in ServiceOrderParts, if true do not delete
+        if (serviceOrderPartRepository.existsByServiceOrder_ServiceOrderId(id)) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Cannot delete ServiceOrder " + id + " because it has parts. Delete the parts first."
+            );
+        }
 
         //only delete if id did not throw an exception
         serviceOrderRepository.delete(serverOrder);

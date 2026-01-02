@@ -13,7 +13,7 @@ public class ServiceOrderPartDTOMapper implements EntityDtoMapper<ServiceOrderPa
         ServiceOrderPartResponseDto response = new ServiceOrderPartResponseDto();
 
         response.setServiceOrderPartId(serviceOrderPartEntity.getServiceOrderPartId());
-        response.setServiceId(serviceOrderPartEntity.getServiceId());
+        response.setServiceOrderId(serviceOrderPartEntity.getServiceOrderId());
         response.setPartId(serviceOrderPartEntity.getPartId());
         response.setUnitCost(serviceOrderPartEntity.getUnitCost());
         response.setUnitPrice(serviceOrderPartEntity.getUnitPrice());
@@ -27,7 +27,7 @@ public class ServiceOrderPartDTOMapper implements EntityDtoMapper<ServiceOrderPa
         ServiceOrderPartEntity entity = new ServiceOrderPartEntity();
 
         //set values
-        entity.setServiceId(serviceOrderPart.getServiceId());
+        entity.setServiceOrderId(serviceOrderPart.getServiceOrderId());
         entity.setPartId(serviceOrderPart.getPartId());
         entity.setUnitCost(serviceOrderPart.getUnitCost());
         entity.setUnitPrice(serviceOrderPart.getUnitPrice());
