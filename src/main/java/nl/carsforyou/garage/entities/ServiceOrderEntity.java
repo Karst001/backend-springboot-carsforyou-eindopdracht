@@ -18,7 +18,7 @@ public class ServiceOrderEntity {
     @Column(name = "service_completed_date")
     private LocalDateTime serviceCompletedDate;
 
-    @Column(name = "vehicle_id", nullable = false)
+    @Column(name = "vehicle_id", nullable = false, insertable = false, updatable = false)
     private Long vehicleId;
 
 
@@ -26,6 +26,12 @@ public class ServiceOrderEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "serviceOrder", fetch = FetchType.LAZY)
     private List<ServiceOrderPartEntity> serviceOrderParts = new ArrayList<>();
+
+    // as per database diagram, many-to-one relation, and is the owner side of this relation
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "vehicle_id", referencedColumnName = "vehicle_id")
+    private VehicleEntity vehicle;
 
     public ServiceOrderEntity() {}
 
@@ -67,5 +73,14 @@ public class ServiceOrderEntity {
     }
     public void setServiceOrderParts(List<ServiceOrderPartEntity> serviceOrderParts) {
         this.serviceOrderParts = serviceOrderParts;
+    }
+
+    //getter/setter for the relation to Vehicles
+    public VehicleEntity getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(VehicleEntity vehicle) {
+        this.vehicle = vehicle;
     }
 }

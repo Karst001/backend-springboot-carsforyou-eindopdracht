@@ -1,29 +1,67 @@
 package nl.carsforyou.garage.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "vehicles")
 public class VehicleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "vehicle_id")
     private Long vehicleId;
+
     @Column(name = "license_plate", nullable = false)
     private String licensePlate;
+
     @Column(name = "vin_number", nullable = false)
     private String vinNumber;
+
     @Column(name = "make", nullable = false)
     private String make;
+
     @Column(name = "model", nullable = false)
     private String model;
+
+    @Column(name = "paint_color")
     private String paintColor;
+
+    @Column(name = "body_style")
     private String bodyStyle;
+
+    @Column(name = "trailer_hitch")
     private Boolean trailerHitch;
+
+    @Column(name = "cost_price")
     private BigDecimal  costPrice;
+
+    @Column(name = "sale_price")
     private BigDecimal  salePrice;
+
+    @Column(name = "customer_id", nullable = false, insertable = false, updatable = false)
     private Long customerId;
+
+    //as per database diagram, many-to-one relation, owner side of the relation
+    //many vehicle can belong to one customer
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
+    private CustomerEntity customer;
+
+    //as per the database diagram, one vehicle can have many service orders
+    @JsonIgnore
+    @OneToMany(mappedBy = "vehicle", fetch = FetchType.LAZY)
+    private List<ServiceOrderEntity> serviceOrders = new ArrayList<>();
+
+
+    //as per databse diagram, one vehicle can have many appointments
+    @JsonIgnore
+    @OneToMany(mappedBy = "vehicle", fetch = FetchType.LAZY)
+    private List<AppointmentEntity> appointments = new ArrayList<>();
 
     public VehicleEntity() {}
 
@@ -44,6 +82,7 @@ public class VehicleEntity {
         this.customerId = customerId;
     }
 
+    //basic getters/setters
     public Long getVehicleId() {
         return vehicleId;
     }
@@ -130,5 +169,32 @@ public class VehicleEntity {
 
     public void setCustomerId(long customerId) {
         this.customerId = customerId;
+    }
+
+    //getters/setters for relation to Appointments
+    public List<AppointmentEntity> getAppointments() {
+        return appointments;
+    }
+    public void setAppointments(List<AppointmentEntity> appointments) {
+        this.appointments = appointments;
+    }
+
+    //added for the Customer relation
+    public CustomerEntity getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(CustomerEntity customer) {
+        this.customer = customer;
+    }
+
+
+    //getter/setter for the ServiceOrder relation
+    public List<ServiceOrderEntity> getServiceOrders() {
+        return serviceOrders;
+    }
+
+    public void setServiceOrders(List<ServiceOrderEntity> serviceOrders) {
+        this.serviceOrders = serviceOrders;
     }
 }

@@ -1,19 +1,19 @@
 -- create users
 INSERT INTO users (email_address, signup_date, last_signin_date, password_hash, user_role)
-VALUES ('ad@test.com', '2025-12-26', now(), 'hashed', 'Admin'),
-('piet@test.com', '2025-12-26', now(), 'hashed', 'Customer'),
+VALUES ('piet@test.com', '2025-12-26', now(), 'hashed', 'Admin'),
+('tom@test.com', '2025-12-26', now(), 'hashed', 'Customer'),
 ('arjan@test.com', '2025-12-21', now(), 'hashed', 'Service');
 
 
 --create customers
 INSERT INTO customers (first_name, last_name, address, zip_code, city, country, telephone_number, email_address, user_id, newsletter_signup_date)
-VALUES ('Ad', 'Karsten', 'Hoofdstraat 43', '7742LR', 'Den Haag', 'Nederland', '06-12345678', 'ad@test.com',
+VALUES ('Piet', 'van Dam', 'Hoofdstraat 43', '7742LR', 'Den Haag', 'Nederland', '06-12345678', 'piet@test.com',
         (SELECT user_id
          FROM users
-         WHERE email_address = 'ad@test.com'), null
+         WHERE email_address = 'piet@test.com'), null
        ),
-       ('Tommy', 'Jansen', 'Kerkstraat 12', '2513 KL', 'Alphen a/d Rijn', 'Nederland', '06-12345678', 'piet@test.com', null, null),
-       ('Arjan', 'van dijk', 'Langestraat 23', '5623 KD', 'Eindhoven', 'Nederland', '06-12345678', 'arjan@test.com',
+       ('Tommy', 'Jansen', 'Kerkstraat 12', '2513 KL', 'Alphen a/d Rijn', 'Nederland', '06-12345678', 'tom@test.com', null, null),
+       ('Arjan', 'van Dijk', 'Langestraat 23', '5623 KD', 'Eindhoven', 'Nederland', '06-12345678', 'arjan@test.com',
        (SELECT user_id
             FROM users
             WHERE email_address = 'arjan@test.com'), null
@@ -22,13 +22,20 @@ VALUES ('Ad', 'Karsten', 'Hoofdstraat 43', '7742LR', 'Den Haag', 'Nederland', '0
 
 --create vehicles
 INSERT INTO vehicles (license_plate, vin_number, make, model, paint_color, body_style, trailer_hitch, cost_price, sale_price, customer_id)
-VALUES ('G-053-NF','DAG01316403540G', 'Mazda', 'CX-3', 'Candy Red', 'Hatchback', false,24125, 29995, null),
-       ('J-153-HX','AXD01316D03H40G', 'Toyota', 'Corolla', 'Sky-blue Metallic', 'Sedan', false,26099, 32770, null),
+VALUES ('G-053-NF','DAG01316403540G', 'Mazda', 'CX-3', 'Candy Red', 'Hatchback', false,24125, 29995,
+        (SELECT customer_id
+         FROM customers
+         WHERE email_address = 'piet@test.com')
+       ),
+       ('J-153-HX','AXD01316D03H40G', 'Toyota', 'Corolla', 'Sky-blue Metallic', 'Sedan', false,26099, 32770,
+        (SELECT customer_id
+         FROM customers
+         WHERE email_address = 'tom@test.com')
+       ),
        ('GZ-00-HG','AXD01316D03H40G', 'Nissan', 'Sunny 2.0', 'Yellow', '4 doors', true,15999, 17995,
-       (SELECT customer_id
-            FROM customers
-            WHERE first_name = 'Ad'
-              AND last_name = 'Karsten')
+        (SELECT customer_id
+         FROM customers
+         WHERE email_address = 'arjan@test.com')
        );
 
 
@@ -50,10 +57,19 @@ INSERT INTO appointments (appointment_date, reason_for_visit, vehicle_id, create
         u.user_id
     FROM vehicles v
         JOIN customers c ON c.customer_id = v.customer_id
-        JOIN users u ON u.email_address = 'ad@test.com'
-    WHERE c.first_name = 'Ad'
-        AND c.last_name  = 'Karsten'
-        AND v.license_plate = 'GZ-00-HG';
+        JOIN users u ON u.email_address = 'arjan@test.com'
+    WHERE c.email_address = 'arjan@test.com' AND v.license_plate = 'GZ-00-HG';
+
+INSERT INTO appointments (appointment_date, reason_for_visit, vehicle_id, created_by_user_id)
+    SELECT
+        now(),
+        'Grote OH-beurt',
+        v.vehicle_id,
+        u.user_id
+    FROM vehicles v
+         JOIN customers c ON c.customer_id = v.customer_id
+         JOIN users u ON u.email_address = 'tom@test.com'
+    WHERE c.email_address = 'tom@test.com' AND v.license_plate = 'J-153-HX';
 
 --create service orders
 INSERT INTO service_orders (service_completed_date, vehicle_id)

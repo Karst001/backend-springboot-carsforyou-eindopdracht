@@ -4,10 +4,12 @@ package nl.carsforyou.garage.services;
 import nl.carsforyou.garage.dtos.ServiceOrder.ServiceOrderRequestDto;
 import nl.carsforyou.garage.dtos.ServiceOrder.ServiceOrderResponseDto;
 import nl.carsforyou.garage.entities.ServiceOrderEntity;
+import nl.carsforyou.garage.entities.VehicleEntity;
 import nl.carsforyou.garage.helpers.DateValidationUtil;
 import nl.carsforyou.garage.mappers.ServiceOrderDTOMapper;
 import nl.carsforyou.garage.repositories.ServiceOrderPartRepository;
 import nl.carsforyou.garage.repositories.ServiceOrderRepository;
+import nl.carsforyou.garage.repositories.VehicleRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -21,11 +23,13 @@ public class ServiceOrderService {
     private final ServiceOrderRepository serviceOrderRepository;
     private final ServiceOrderDTOMapper serviceOrderDTOMapper;
     private final ServiceOrderPartRepository serviceOrderPartRepository;
+    private final VehicleRepository vehicleRepository;
 
-    public ServiceOrderService(ServiceOrderRepository serviceOrderRepository, ServiceOrderDTOMapper serviceOrderDTOMapper, ServiceOrderPartRepository serviceOrderPartRepository) {
+    public ServiceOrderService(ServiceOrderRepository serviceOrderRepository, ServiceOrderDTOMapper serviceOrderDTOMapper, ServiceOrderPartRepository serviceOrderPartRepository, VehicleRepository vehicleRepository) {
         this.serviceOrderRepository = serviceOrderRepository;
         this.serviceOrderDTOMapper = serviceOrderDTOMapper;
         this.serviceOrderPartRepository = serviceOrderPartRepository;
+        this.vehicleRepository = vehicleRepository;
     }
 
     public List<ServiceOrderResponseDto> getAllServiceOrders() {
@@ -40,9 +44,14 @@ public class ServiceOrderService {
         return serviceOrderDTOMapper.mapToDto(serviceOrder);
     }
 
+
     public ServiceOrderResponseDto createServiceOrder(ServiceOrderRequestDto dto) {
         //store passed DTO in entityMapper
         ServiceOrderEntity entity = serviceOrderDTOMapper.mapToEntity(dto);
+
+        //set the relation
+        VehicleEntity vehicle = checkVehicle(dto.getVehicleId());
+        entity.setVehicle(vehicle);
 
         //save to repository and return saved data
         ServiceOrderEntity saved = serviceOrderRepository.save(entity);
@@ -66,6 +75,10 @@ public class ServiceOrderService {
         existing.setServiceCompletedDate(dto.getServiceCompletedDate());
         existing.setVehicleId(dto.getVehicleId());
 
+        //set the relation
+        VehicleEntity vehicle = checkVehicle(dto.getVehicleId());
+        existing.setVehicle(vehicle);
+
         //save to repository and return saved data
         ServiceOrderEntity saved = serviceOrderRepository.save(existing);
         return serviceOrderDTOMapper.mapToDto(saved);
@@ -85,7 +98,22 @@ public class ServiceOrderService {
             );
         }
 
+        //check if Vehicles exists in Service, if true do not delete
+        if (serviceOrderRepository.existsByVehicle_VehicleId(id)) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Cannot delete Vehicle " + id + " because service orders exist. Delete the vehicle first."
+            );
+        }
+
         //only delete if id did not throw an exception
         serviceOrderRepository.delete(serverOrder);
+    }
+
+    //helper to check if ServiceOrder has a vehicle relation
+    private VehicleEntity checkVehicle(Long vehicleId) {
+        return vehicleRepository.findById(vehicleId)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Vehicle not found"));
     }
 }

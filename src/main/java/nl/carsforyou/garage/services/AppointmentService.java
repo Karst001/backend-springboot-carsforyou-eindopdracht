@@ -4,9 +4,11 @@ package nl.carsforyou.garage.services;
 import nl.carsforyou.garage.dtos.appointment.AppointmentRequestDto;
 import nl.carsforyou.garage.dtos.appointment.AppointmentResponseDto;
 import nl.carsforyou.garage.entities.AppointmentEntity;
+import nl.carsforyou.garage.entities.VehicleEntity;
 import nl.carsforyou.garage.helpers.DateValidationUtil;
 import nl.carsforyou.garage.mappers.AppointmentDTOMapper;
 import nl.carsforyou.garage.repositories.AppointmentRepository;
+import nl.carsforyou.garage.repositories.VehicleRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -16,10 +18,12 @@ import java.util.List;
 public class AppointmentService {
     private final AppointmentRepository appointmentRepository;
     private final AppointmentDTOMapper appointmentDTOMapper;
+    private final VehicleRepository vehicleRepository;
 
-    public AppointmentService(AppointmentRepository appointmentRepository, AppointmentDTOMapper appointmentDTOMapper) {
+    public AppointmentService(AppointmentRepository appointmentRepository, AppointmentDTOMapper appointmentDTOMapper, VehicleRepository vehicleRepository) {
         this.appointmentRepository = appointmentRepository;
         this.appointmentDTOMapper = appointmentDTOMapper;
+        this.vehicleRepository = vehicleRepository;
     }
 
     public List<AppointmentResponseDto> getAllAppointments() {
@@ -47,6 +51,10 @@ public class AppointmentService {
                 "appointmentDate"
         );
 
+        //set the vehicle relation
+        VehicleEntity vehicle = checkVehicle(dto.getVehicleId());
+        entity.setVehicle(vehicle);
+
         //save to repository and return saved data
         AppointmentEntity saved = appointmentRepository.save(entity);
         return appointmentDTOMapper.mapToDto(saved);
@@ -71,6 +79,10 @@ public class AppointmentService {
         existing.setCompletedDate(dto.getCompletedDate());
         existing.setVehicleId(dto.getVehicleId());
 
+        //set the vehicle relation
+        VehicleEntity vehicle = checkVehicle(dto.getVehicleId());
+        existing.setVehicle(vehicle);
+
         //save to repository and return saved data
         AppointmentEntity saved = appointmentRepository.save(existing);
         return appointmentDTOMapper.mapToDto(saved);
@@ -83,6 +95,13 @@ public class AppointmentService {
 
         //only delete if id did not throw an exception
         appointmentRepository.delete(appointment);
+    }
+
+    //helper that sets relation between Appointments and Vehicles
+    private VehicleEntity checkVehicle(Long vehicleId) {
+        return vehicleRepository.findById(vehicleId)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Vehicle not found"));
     }
 }
 
