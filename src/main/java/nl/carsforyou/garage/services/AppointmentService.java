@@ -12,6 +12,8 @@ import nl.carsforyou.garage.repositories.VehicleRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -103,5 +105,21 @@ public class AppointmentService {
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "Vehicle not found"));
     }
+
+
+    //this is a requirement in my Ideefase document, wasn't taken care of yet
+    public AppointmentResponseDto cancelAppointment(Long id) {
+        AppointmentEntity existing = appointmentRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Appointment with Id " + id + " was not found"));
+
+        //set the date it was cancelled
+        existing.setCancelledDate(LocalDateTime.now());
+        //leave the relation to vehicle intact so we know what it was for
+
+        //save and return
+        AppointmentEntity saved = appointmentRepository.save(existing);
+        return appointmentDTOMapper.mapToDto(saved);
+    }
+
 }
 

@@ -17,6 +17,9 @@ public class CustomerUploadRequestDto {
     @NotBlank
     private String fileName;  //file, PNG, PDF, etc  will be saved on the server, not in database
 
+    @NotBlank
+    private String description;
+
     public Long getCustomerId() {
         return customerId;
     }
@@ -39,5 +42,13 @@ public class CustomerUploadRequestDto {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

@@ -4,8 +4,11 @@ package nl.carsforyou.garage.controllers;
 import jakarta.validation.Valid;
 import nl.carsforyou.garage.dtos.appointment.AppointmentRequestDto;
 import nl.carsforyou.garage.dtos.appointment.AppointmentResponseDto;
+import nl.carsforyou.garage.helpers.UrlHelper;
 import nl.carsforyou.garage.services.AppointmentService;
+import org.jspecify.annotations.NonNull;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,12 +26,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/appointments")
 public class AppointmentController {
     private final AppointmentService appointmentService;
+    private final UrlHelper urlHelper;
 
-    public AppointmentController(AppointmentService appointmentService) {
+    public AppointmentController(AppointmentService appointmentService, UrlHelper urlHelper) {
         this.appointmentService = appointmentService;
+        this.urlHelper = urlHelper;
     }
 
-    //these annotations are needed for Swagger
     @Operation(summary = "Get all appointments")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "List of appointments returned")})
     @GetMapping
@@ -55,9 +59,13 @@ public class AppointmentController {
             )
     })
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public AppointmentResponseDto createAppointment(@Valid @RequestBody AppointmentRequestDto dto) {
-        return appointmentService.createAppointment(dto);
+    public ResponseEntity<@NonNull AppointmentResponseDto> createAppointment(@Valid @RequestBody AppointmentRequestDto dto) {
+        AppointmentResponseDto created = appointmentService.createAppointment(dto);
+
+        //this will return 201 Created and a location header with the new Id
+        return ResponseEntity
+                .created(urlHelper.getCurrentUrlWithId(created.getAppointmentId()))
+                .body(created);
     }
 
 
@@ -68,8 +76,22 @@ public class AppointmentController {
             @ApiResponse(responseCode = "400", description = "Validation error", content = @Content)
     })
     @PutMapping("/{id}")
-    public AppointmentResponseDto updateAppointment(@Parameter(description = "Appointment id", example = "1") @PathVariable Long id, @Valid @RequestBody AppointmentRequestDto dto) {
-        return appointmentService.updateAppointment(id, dto);
+    public ResponseEntity<@NonNull AppointmentResponseDto> updateAppointment(@Parameter(description = "Appointment id", example = "1") @PathVariable Long id, @Valid @RequestBody AppointmentRequestDto dto) {
+        AppointmentResponseDto updated = appointmentService.updateAppointment(id, dto);
+
+        return ResponseEntity.ok(updated);
+    }
+
+
+    @Operation(summary = "Cancel an appointment")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Appointment cancelled"),
+            @ApiResponse(responseCode = "404", description = "Appointment not found, check the {id}", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Validation error", content = @Content)
+    })
+    @PatchMapping("/{id}")
+    public AppointmentResponseDto cancelAppointment(@Parameter(description = "Appointment id", example = "1") @PathVariable Long id) {
+        return appointmentService.cancelAppointment(id);
     }
 
 

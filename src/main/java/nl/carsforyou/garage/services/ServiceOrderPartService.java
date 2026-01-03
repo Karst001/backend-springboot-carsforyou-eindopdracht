@@ -67,14 +67,15 @@ public class ServiceOrderPartService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "ServiceOrderPart with Id " + id + " was not found"));
 
-        //if no errors, set values that were passed from dto
-        existing.setServiceOrderId(dto.getServiceOrderId());
-        existing.setPartId(dto.getPartId());
+        //if no errors, update the historical/value fields from dto
         existing.setUnitCost(dto.getUnitCost());
         existing.setUnitPrice(dto.getUnitPrice());
         existing.setQtyUsed(dto.getQtyUsed());
 
-        //save to repository and return saved data
+        //as a business rule, since this table is historical, it is not allowed
+        //to change the part_id or service_order_id after it was created
+        //If the wrong part was added, delete the line first and create a new one, this is a clean way making the right transactions
+
         ServiceOrderPartEntity saved = serviceOrderPartRepository.save(existing);
         return serviceOrderPartDTOMapper.mapToDto(saved);
     }

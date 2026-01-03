@@ -9,6 +9,7 @@ public class CustomerUploadResponseDto {
     private String filePath;
     private String fileType;
     private String fileName;                //this is just the reference to the file location, not the binary data
+    private String description;
     private LocalDateTime uploadDate;
 
     public CustomerUploadResponseDto() {}
@@ -68,5 +69,13 @@ public class CustomerUploadResponseDto {
 
     public void setUploadDate(LocalDateTime uploadDate) {
         this.uploadDate = uploadDate;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

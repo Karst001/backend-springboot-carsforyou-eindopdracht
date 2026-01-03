@@ -12,8 +12,11 @@ import jakarta.validation.Valid;
 import nl.carsforyou.garage.dtos.ServiceOrder.ServiceOrderResponseDto;
 import nl.carsforyou.garage.dtos.Vehicle.VehicleRequestDto;
 import nl.carsforyou.garage.dtos.Vehicle.VehicleResponseDto;
+import nl.carsforyou.garage.helpers.UrlHelper;
 import nl.carsforyou.garage.services.VehicleService;
+import org.jspecify.annotations.NonNull;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,9 +26,11 @@ import java.util.List;
 @RequestMapping("/vehicles")
 public class VehicleController {
     private final VehicleService vehicleService;
+    private final UrlHelper urlHelper;
 
-    public VehicleController(VehicleService vehicleService) {
+    public VehicleController(VehicleService vehicleService, UrlHelper urlHelper) {
         this.vehicleService = vehicleService;
+        this.urlHelper = urlHelper;
     }
 
     //these annotations are needed for Swagger
@@ -66,9 +71,13 @@ public class VehicleController {
             )
     })
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public VehicleResponseDto createVehicle(@Valid @RequestBody VehicleRequestDto dto) {
-        return vehicleService.createVehicle(dto);
+    public ResponseEntity<@NonNull VehicleResponseDto> createVehicle(@Valid @RequestBody VehicleRequestDto dto) {
+        VehicleResponseDto created = vehicleService.createVehicle(dto);
+
+        //this will return 201 Created and a location header with the new Id
+        return ResponseEntity
+                .created(urlHelper.getCurrentUrlWithId(created.getVehicleId()))
+                .body(created);
     }
 
 
@@ -79,8 +88,10 @@ public class VehicleController {
             @ApiResponse(responseCode = "400", description = "Validation error", content = @Content)
     })
     @PutMapping("/{id}")
-    public VehicleResponseDto updateVehicle(@Parameter(description = "Vehicle id", example = "1") @PathVariable Long id, @Valid @RequestBody VehicleRequestDto dto) {
-        return vehicleService.updateVehicle(id, dto);
+    public ResponseEntity<@NonNull VehicleResponseDto> updateVehicle(@Parameter(description = "Vehicle id", example = "1") @PathVariable Long id, @Valid @RequestBody VehicleRequestDto dto) {
+        VehicleResponseDto updated = vehicleService.updateVehicle(id, dto);
+
+        return ResponseEntity.ok(updated);
     }
 
 

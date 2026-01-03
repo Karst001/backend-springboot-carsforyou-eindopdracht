@@ -8,6 +8,7 @@ public class AppointmentResponseDto {
     private LocalDateTime appointmentDate;
     private String reasonForVisit;
     private LocalDateTime completedDate;
+    private LocalDateTime cancelledDate;
     private Long vehicleId;
     private Long createdByUserId;
 
@@ -57,5 +58,13 @@ public class AppointmentResponseDto {
 
     public void setCreatedByUserId(Long createdByUserId) {
         this.createdByUserId = createdByUserId;
+    }
+
+    public LocalDateTime getCancelledDate() {
+        return cancelledDate;
+    }
+
+    public void setCancelledDate(LocalDateTime cancelledDate) {
+        this.cancelledDate = cancelledDate;
     }
 }

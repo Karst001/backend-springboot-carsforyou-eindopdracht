@@ -21,7 +21,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class CustomerUploadService {
@@ -52,7 +51,7 @@ public class CustomerUploadService {
     }
 
 
-    public CustomerUploadResponseDto createCustomerUpload(Long customerId, MultipartFile file) {
+    public CustomerUploadResponseDto createCustomerUpload(Long customerId, String description, MultipartFile file) {
         //validate
         if (file == null || file.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "File is required");
@@ -93,13 +92,15 @@ public class CustomerUploadService {
         dto.setCustomerId(customerId);
         dto.setFileType(fileType);
         dto.setFileName(fileName);
+        dto.setDescription(description);
 
         //Map the DTO to  entity
         CustomerUploadEntity entity = customerUploadDTOMapper.mapToEntity(dto);
 
         //Update server-generated fields
         entity.setUploadDate(LocalDateTime.now());
-        entity.setFilePath(targetFile.toString());  //this stores like 'C:\temp\customers\1\{filename}'
+        entity.setFilePath(targetFile.toString());          //this stores like 'C:\temp\customers\1\{filename}'
+        entity.setDescription(description);
 
         //create the relation between Customer and CustomerUpload
         CustomerEntity customer = customerRepository.findById(customerId)

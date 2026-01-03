@@ -4,8 +4,11 @@ package nl.carsforyou.garage.controllers;
 import jakarta.validation.Valid;
 import nl.carsforyou.garage.dtos.customer.CustomerUploadRequestDto;
 import nl.carsforyou.garage.dtos.customer.CustomerUploadResponseDto;
+import nl.carsforyou.garage.helpers.UrlHelper;
 import nl.carsforyou.garage.services.CustomerUploadService;
+import org.jspecify.annotations.NonNull;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,9 +26,11 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/customeruploads")
 public class CustomerUploadController {
     private final CustomerUploadService customerUploadService;
+    private final UrlHelper urlHelper;
 
-    public CustomerUploadController(CustomerUploadService customerUploadService) {
+    public CustomerUploadController(CustomerUploadService customerUploadService, UrlHelper urlHelper) {
         this.customerUploadService = customerUploadService;
+        this.urlHelper = urlHelper;
     }
 
 
@@ -52,9 +57,14 @@ public class CustomerUploadController {
     @Operation(summary = "Upload a file for a customer")
     @ApiResponse(responseCode = "201", description = "Upload created")
     @PostMapping(consumes = "multipart/form-data")
-    @ResponseStatus(HttpStatus.CREATED)
-    public CustomerUploadResponseDto uploadCustomerFile(@RequestParam Long customerId, @RequestParam("file") MultipartFile file) {
-        return customerUploadService.createCustomerUpload(customerId, file);
+    public ResponseEntity<@NonNull CustomerUploadResponseDto> uploadCustomerFile(@RequestParam Long customerId, @RequestParam String description, @RequestParam("file") MultipartFile file) {
+        CustomerUploadResponseDto created =
+                customerUploadService.createCustomerUpload(customerId, description, file);
+
+        //this will return 201 Created and a location header with the new Id
+        return ResponseEntity
+                .created(urlHelper.getCurrentUrlWithId(created.getUploadId()))
+                .body(created);
     }
 
 
@@ -65,8 +75,11 @@ public class CustomerUploadController {
             @ApiResponse(responseCode = "400", description = "Validation error", content = @Content)
     })
     @PutMapping("/{id}")
-    public CustomerUploadResponseDto updateCustomerUpload(@Parameter(description = "Customer-upload id", example = "1") @PathVariable Long id, @Valid @RequestBody CustomerUploadRequestDto dto) {
-        return customerUploadService.updateCustomerUpload(id, dto);
+    public ResponseEntity<@NonNull CustomerUploadResponseDto> updateCustomerUpload(@Parameter(description = "Customer-upload id", example = "1") @PathVariable Long id, @Valid @RequestBody CustomerUploadRequestDto dto) {
+        CustomerUploadResponseDto updated =
+                customerUploadService.updateCustomerUpload(id, dto);
+
+        return ResponseEntity.ok(updated);
     }
 
 

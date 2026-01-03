@@ -10,10 +10,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import nl.carsforyou.garage.dtos.ServiceOrder.ServiceOrderPartRequestDto;
 import nl.carsforyou.garage.dtos.ServiceOrder.ServiceOrderPartResponseDto;
-import nl.carsforyou.garage.dtos.part.PartRequestDto;
-import nl.carsforyou.garage.dtos.part.PartResponseDto;
+import nl.carsforyou.garage.helpers.UrlHelper;
 import nl.carsforyou.garage.services.ServiceOrderPartService;
+import org.jspecify.annotations.NonNull;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,9 +24,11 @@ import java.util.List;
 @RequestMapping("/serviceorderparts")
 public class ServiceOrderPartController {
     private final ServiceOrderPartService serviceOrderPartService;
+    private final UrlHelper urlHelper;
 
-    public ServiceOrderPartController(ServiceOrderPartService serviceOrderPartService) {
+    public ServiceOrderPartController(ServiceOrderPartService serviceOrderPartService, UrlHelper urlHelper) {
         this.serviceOrderPartService = serviceOrderPartService;
+        this.urlHelper = urlHelper;
     }
 
     //these annotations are needed for Swagger
@@ -55,9 +58,14 @@ public class ServiceOrderPartController {
             )
     })
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public ServiceOrderPartResponseDto createServiceOrderPart(@Valid @RequestBody ServiceOrderPartRequestDto dto) {
-        return serviceOrderPartService.createServiceOrderPart(dto);
+    public ResponseEntity<@NonNull ServiceOrderPartResponseDto> createServiceOrderPart(@Valid @RequestBody ServiceOrderPartRequestDto dto) {
+        ServiceOrderPartResponseDto created =
+                serviceOrderPartService.createServiceOrderPart(dto);
+
+        //this will return 201 Created and a location header with the new Id
+        return ResponseEntity
+                .created(urlHelper.getCurrentUrlWithId(created.getServiceOrderPartId()))
+                .body(created);
     }
 
 
@@ -68,8 +76,10 @@ public class ServiceOrderPartController {
             @ApiResponse(responseCode = "400", description = "Validation error", content = @Content)
     })
     @PutMapping("/{id}")
-    public ServiceOrderPartResponseDto updateServiceOrderPart(@Parameter(description = "Customer id", example = "1") @PathVariable Long id, @Valid @RequestBody ServiceOrderPartRequestDto dto) {
-        return serviceOrderPartService.updateServiceOrderPart(id, dto);
+    public ResponseEntity<@NonNull ServiceOrderPartResponseDto> updateServiceOrderPart(@Parameter(description = "Customer id", example = "1") @PathVariable Long id, @Valid @RequestBody ServiceOrderPartRequestDto dto) {
+        ServiceOrderPartResponseDto updated = serviceOrderPartService.updateServiceOrderPart(id, dto);
+
+        return ResponseEntity.ok(updated);
     }
 
 

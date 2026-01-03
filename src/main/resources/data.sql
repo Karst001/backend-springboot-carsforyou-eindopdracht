@@ -71,10 +71,17 @@ INSERT INTO appointments (appointment_date, reason_for_visit, vehicle_id, create
          JOIN users u ON u.email_address = 'tom@test.com'
     WHERE c.email_address = 'tom@test.com' AND v.license_plate = 'J-153-HX';
 
+
 --create service orders
 INSERT INTO service_orders (service_completed_date, vehicle_id)
 VALUES ('2025-12-05', 1),
-       (null, 2);
+       (null, 2),
+       ('2025-12-31', 3);
 
-
+--create service orders parts
+INSERT INTO service_order_parts (service_order_id, part_id, unit_cost, unit_price, qty_used)
+VALUES (1, 2, 17.95,24.95, 2),
+       (1,5,89.25, 124.95, 10),
+       (3,1,14.95, 29.99, 1),
+       (3,2,19.95, 29.95, 2);
 

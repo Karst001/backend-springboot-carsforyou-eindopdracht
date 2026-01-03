@@ -18,6 +18,7 @@ public class CustomerUploadDTOMapper implements EntityDtoMapper<CustomerUploadEn
         response.setFileType(customerUploadEntity.getFileType());
         response.setFileName(customerUploadEntity.getFileName());
         response.setUploadDate(customerUploadEntity.getUploadDate());
+        response.setDescription(customerUploadEntity.getDescription());
 
         return response;
     }

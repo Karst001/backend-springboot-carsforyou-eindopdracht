@@ -11,8 +11,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import nl.carsforyou.garage.dtos.part.PartRequestDto;
 import nl.carsforyou.garage.dtos.part.PartResponseDto;
+import nl.carsforyou.garage.helpers.UrlHelper;
 import nl.carsforyou.garage.services.PartService;
+import org.jspecify.annotations.NonNull;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,9 +25,11 @@ import java.util.List;
 @RequestMapping("/parts")
 public class PartController {
     private final PartService partService;
+    private final UrlHelper urlHelper;
 
-    public PartController(PartService partService) {
+    public PartController(PartService partService, UrlHelper urlHelper) {
         this.partService = partService;
+        this.urlHelper = urlHelper;
     }
 
     //these annotations are needed for Swagger
@@ -54,9 +59,13 @@ public class PartController {
             )
     })
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public PartResponseDto createPart(@Valid @RequestBody PartRequestDto dto) {
-        return partService.createPart(dto);
+    public ResponseEntity<@NonNull PartResponseDto> createPart(@Valid @RequestBody PartRequestDto dto) {
+        PartResponseDto created = partService.createPart(dto);
+
+        //this will return 201 Created and a location header with the new Id
+        return ResponseEntity
+                .created(urlHelper.getCurrentUrlWithId(created.getPartId()))
+                .body(created);
     }
 
 
@@ -67,8 +76,10 @@ public class PartController {
             @ApiResponse(responseCode = "400", description = "Validation error", content = @Content)
     })
     @PutMapping("/{id}")
-    public PartResponseDto updatePart(@Parameter(description = "Customer id", example = "1") @PathVariable Long id, @Valid @RequestBody PartRequestDto dto) {
-        return partService.updatePart(id, dto);
+    public ResponseEntity<@NonNull PartResponseDto> updatePart(@Parameter(description = "Customer id", example = "1") @PathVariable Long id, @Valid @RequestBody PartRequestDto dto) {
+        PartResponseDto updated = partService.updatePart(id, dto);
+
+        return ResponseEntity.ok(updated);
     }
 
 

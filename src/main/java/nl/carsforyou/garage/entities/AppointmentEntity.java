@@ -25,6 +25,8 @@ public class AppointmentEntity {
     @Column(name = "completed_date")
     private LocalDateTime completedDate;
 
+    @Column(name = "cancelled_date")        //this is a requirement in my Ideefase document, wasn't taken care of yet
+    private LocalDateTime cancelledDate;
 
     //as per database diagram, one vehicle can have many appointments
     //each appointment belongs to one vehicle only, the VehicleId in cannot be null
@@ -124,5 +126,14 @@ public class AppointmentEntity {
 
     public void setVehicle(VehicleEntity vehicle) {
         this.vehicle = vehicle;
+    }
+
+    //added for canceling an appointment
+    public LocalDateTime getCancelledDate() {
+        return cancelledDate;
+    }
+
+    public void setCancelledDate(LocalDateTime cancelledDate) {
+        this.cancelledDate = cancelledDate;
     }
 }

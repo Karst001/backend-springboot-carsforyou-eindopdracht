@@ -24,7 +24,6 @@ public class ServiceOrderPartRequestDto {
     @Positive   //must be greater than 0
     private int qtyUsed;
 
-
     public Long getServiceOrderId() {
         return serviceOrderId;
     }
