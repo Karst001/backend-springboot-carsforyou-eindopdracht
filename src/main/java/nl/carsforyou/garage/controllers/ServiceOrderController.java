@@ -11,8 +11,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import nl.carsforyou.garage.dtos.ServiceOrder.ServiceOrderRequestDto;
 import nl.carsforyou.garage.dtos.ServiceOrder.ServiceOrderResponseDto;
+import nl.carsforyou.garage.helpers.UrlHelper;
 import nl.carsforyou.garage.services.ServiceOrderService;
+import org.jspecify.annotations.NonNull;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,9 +25,11 @@ import java.util.List;
 @RequestMapping("/serviceorders")
 public class ServiceOrderController {
     private final ServiceOrderService serviceOrderService;
+    private final UrlHelper urlHelper;
 
-    public ServiceOrderController(ServiceOrderService serviceOrderService) {
+    public ServiceOrderController(ServiceOrderService serviceOrderService, UrlHelper urlHelper) {
         this.serviceOrderService = serviceOrderService;
+        this.urlHelper = urlHelper;
     }
 
     //these annotations are needed for Swagger
@@ -54,9 +59,13 @@ public class ServiceOrderController {
             )
     })
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public ServiceOrderResponseDto createServiceOrder(@Valid @RequestBody ServiceOrderRequestDto dto) {
-        return serviceOrderService.createServiceOrder(dto);
+    public ResponseEntity<@NonNull ServiceOrderResponseDto> createServiceOrder(@Valid @RequestBody ServiceOrderRequestDto dto) {
+        ServiceOrderResponseDto created = serviceOrderService.createServiceOrder(dto);
+
+        //this will return 201 Created and a location header with the new Id
+        return ResponseEntity
+                .created(urlHelper.getCurrentUrlWithId(created.getServiceOrderId()))
+                .body(created);
     }
 
 
@@ -67,8 +76,11 @@ public class ServiceOrderController {
             @ApiResponse(responseCode = "400", description = "Validation error", content = @Content)
     })
     @PutMapping("/{id}")
-    public ServiceOrderResponseDto updateServiceOrder(@Parameter(description = "Customer id", example = "1") @PathVariable Long id, @Valid @RequestBody ServiceOrderRequestDto dto) {
-        return serviceOrderService.updateServiceOrder(id, dto);
+    public ResponseEntity<@NonNull ServiceOrderResponseDto> updateServiceOrder(@Parameter(description = "Customer id", example = "1") @PathVariable Long id, @Valid @RequestBody ServiceOrderRequestDto dto) {
+        ServiceOrderResponseDto updated = serviceOrderService.updateServiceOrder(id, dto);
+
+        return ResponseEntity.ok(updated);
+
     }
 
 

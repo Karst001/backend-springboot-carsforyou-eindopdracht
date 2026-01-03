@@ -11,8 +11,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import nl.carsforyou.garage.dtos.User.UserRequestDto;
 import nl.carsforyou.garage.dtos.User.UserResponseDto;
+import nl.carsforyou.garage.helpers.UrlHelper;
 import nl.carsforyou.garage.services.UserService;
+import org.jspecify.annotations.NonNull;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,9 +25,11 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
+    private final UrlHelper urlHelper;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UrlHelper urlHelper) {
         this.userService = userService;
+        this.urlHelper = urlHelper;
     }
 
     //these annotations are needed for Swagger
@@ -54,9 +59,13 @@ public class UserController {
             )
     })
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public UserResponseDto createUser(@Valid @RequestBody UserRequestDto dto) {
-        return userService.createUser(dto);
+    public ResponseEntity<@NonNull UserResponseDto> createUser(@Valid @RequestBody UserRequestDto dto) {
+        UserResponseDto created = userService.createUser(dto);
+
+        //this will return 201 Created and a location header with the new Id
+        return ResponseEntity
+                .created(urlHelper.getCurrentUrlWithId(created.getUserId()))
+                .body(created);
     }
 
 
@@ -67,8 +76,11 @@ public class UserController {
             @ApiResponse(responseCode = "400", description = "Validation error", content = @Content)
     })
     @PutMapping("/{id}")
-    public UserResponseDto updateCustomer(@Parameter(description = "User id", example = "1") @PathVariable Long id, @Valid @RequestBody UserRequestDto dto) {
-        return userService.updateUser(id, dto);
+    public ResponseEntity<@NonNull UserResponseDto> updateCustomer(@Parameter(description = "User id", example = "1") @PathVariable Long id, @Valid @RequestBody UserRequestDto dto) {
+        UserResponseDto updated = userService.updateUser(id, dto);
+
+        return ResponseEntity.ok(updated);
+
     }
 
 

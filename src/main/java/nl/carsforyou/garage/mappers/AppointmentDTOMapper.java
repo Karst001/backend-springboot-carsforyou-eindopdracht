@@ -16,6 +16,7 @@ public class AppointmentDTOMapper implements EntityDtoMapper<AppointmentEntity, 
         response.setAppointmentDate(appointmentEntity.getAppointmentDate());
         response.setReasonForVisit(appointmentEntity.getReasonForVisit());
         response.setCompletedDate(appointmentEntity.getCompletedDate());
+        response.setCancelledDate(appointmentEntity.getCancelledDate());
         response.setVehicleId(appointmentEntity.getVehicleId());
         response.setCreatedByUserId(appointmentEntity.getCreatedByUserId());
 

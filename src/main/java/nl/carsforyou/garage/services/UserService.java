@@ -10,10 +10,13 @@ import nl.carsforyou.garage.repositories.AppointmentRepository;
 import nl.carsforyou.garage.repositories.CustomerRepository;
 import nl.carsforyou.garage.repositories.UserRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -21,12 +24,14 @@ public class UserService {
     private final UserDTOMapper userDTOMapper;
     private final CustomerRepository customerRepository;
     private final AppointmentRepository appointmentRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, UserDTOMapper userDTOMapper, CustomerRepository customerRepository, AppointmentRepository appointmentRepository) {
+    public UserService(UserRepository userRepository, UserDTOMapper userDTOMapper, CustomerRepository customerRepository, AppointmentRepository appointmentRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userDTOMapper = userDTOMapper;
         this.customerRepository = customerRepository;
         this.appointmentRepository = appointmentRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<UserResponseDto> getAllUsers() {
@@ -42,8 +47,24 @@ public class UserService {
     }
 
     public UserResponseDto createUser(UserRequestDto dto) {
+        //validate the userRole
+        Set<String> allowed = Set.of("Admin", "Customer", "Service");
+
+        if (dto.getUserRole() == null || !allowed.contains(dto.getUserRole())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "userRole must be one of: Admin, Customer, Service");
+        }
+
         //store passed DTO in entityMapper
         UserEntity entity = userDTOMapper.mapToEntity(dto);
+
+        //hash the string password from the Dto
+        String hashedPassword = passwordEncoder.encode(dto.getPassword());
+
+        //update the entity
+        entity.setPasswordHash(hashedPassword);
+        entity.setUserRole(dto.getUserRole());
+        entity.setSignupDate(LocalDateTime.now());
 
         //save to repository and return saved data
         UserEntity saved = userRepository.save(entity);

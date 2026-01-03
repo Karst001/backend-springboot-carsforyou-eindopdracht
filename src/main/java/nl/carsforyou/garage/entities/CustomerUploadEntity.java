@@ -24,6 +24,10 @@ public class CustomerUploadEntity {
     @Column(name = "file_name")
     private String fileName;
 
+    @Column(name = "description")
+    private String description;     //added so user can describe the uploaded file
+
+
     private LocalDateTime uploadDate;
 
     //as per database diagram, CustomerUploads (owner of the relation) is a many-to-one relation to Customers
@@ -94,6 +98,14 @@ public class CustomerUploadEntity {
 
     public void setUploadDate(LocalDateTime uploadDate) {
         this.uploadDate = uploadDate;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     //added to get Customer details

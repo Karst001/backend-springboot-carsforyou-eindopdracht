@@ -2,12 +2,14 @@
 package nl.carsforyou.garage.controllers;
 
 import jakarta.validation.Valid;
-import nl.carsforyou.garage.dtos.ServiceOrder.ServiceOrderResponseDto;
 import nl.carsforyou.garage.dtos.Vehicle.VehicleResponseDto;
 import nl.carsforyou.garage.dtos.customer.CustomerRequestDto;
 import nl.carsforyou.garage.dtos.customer.CustomerResponseDto;
+import nl.carsforyou.garage.helpers.UrlHelper;
 import nl.carsforyou.garage.services.CustomerService;
+import org.jspecify.annotations.NonNull;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,9 +27,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/customers")
 public class CustomerController {
     private final CustomerService customerService;
+    private final UrlHelper urlHelper;
 
-    public CustomerController(CustomerService customerService) {
+    public CustomerController(CustomerService customerService, UrlHelper urlHelper) {
         this.customerService = customerService;
+        this.urlHelper = urlHelper;
     }
 
     //these annotations are needed for Swagger
@@ -69,9 +73,13 @@ public class CustomerController {
             )
     })
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public CustomerResponseDto createCustomer(@Valid @RequestBody CustomerRequestDto dto) {
-        return customerService.createCustomer(dto);
+    public ResponseEntity<@NonNull CustomerResponseDto> createCustomer(@Valid @RequestBody CustomerRequestDto dto) {
+        CustomerResponseDto created = customerService.createCustomer(dto);
+
+        //this will return 201 Created and a location header with the new Id
+        return ResponseEntity
+                .created(urlHelper.getCurrentUrlWithId(created.getCustomerId()))
+                .body(created);
     }
 
 
@@ -82,8 +90,10 @@ public class CustomerController {
             @ApiResponse(responseCode = "400", description = "Validation error", content = @Content)
     })
     @PutMapping("/{id}")
-    public CustomerResponseDto updateCustomer(@Parameter(description = "Customer id", example = "1") @PathVariable Long id, @Valid @RequestBody CustomerRequestDto dto) {
-        return customerService.updateCustomer(id, dto);
+    public ResponseEntity<@NonNull CustomerResponseDto> updateCustomer(@Parameter(description = "Customer id", example = "1") @PathVariable Long id, @Valid @RequestBody CustomerRequestDto dto) {
+        CustomerResponseDto updated = customerService.updateCustomer(id, dto);
+
+        return ResponseEntity.ok(updated);
     }
 
 
