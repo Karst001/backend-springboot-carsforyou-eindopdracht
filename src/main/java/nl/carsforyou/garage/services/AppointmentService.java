@@ -1,6 +1,7 @@
 // Service -> talks to repository
 package nl.carsforyou.garage.services;
 
+import jakarta.persistence.EntityNotFoundException;
 import nl.carsforyou.garage.dtos.appointment.AppointmentRequestDto;
 import nl.carsforyou.garage.dtos.appointment.AppointmentResponseDto;
 import nl.carsforyou.garage.entities.AppointmentEntity;
@@ -12,7 +13,6 @@ import nl.carsforyou.garage.repositories.VehicleRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -34,8 +34,7 @@ public class AppointmentService {
 
     public AppointmentResponseDto getAppointmentById(Long id) {
         AppointmentEntity appointment = appointmentRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "Appointment with Id " + id + " was not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Appointment with Id " + id + " was not found"));
 
         return appointmentDTOMapper.mapToDto(appointment);
     }
