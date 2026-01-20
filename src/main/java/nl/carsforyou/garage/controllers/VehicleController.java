@@ -95,7 +95,7 @@ public class VehicleController {
     }
 
 
-    @Operation(summary = "Delete a customer")
+    @Operation(summary = "Delete a vehicle")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Vehicle deleted"),
             @ApiResponse(responseCode = "404", description = "Vehicle not found, check the {id}", content = @Content)}
