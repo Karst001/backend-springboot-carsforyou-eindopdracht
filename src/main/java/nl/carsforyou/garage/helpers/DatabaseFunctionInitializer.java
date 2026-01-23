@@ -3,11 +3,13 @@ package nl.carsforyou.garage.helpers;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 //this helper creates a stored function that is called to report the number of visits for a customer
 //instead of having this inline SQL inside the repository I personally find this cleaner coding practise
 @Configuration
+@Profile("!test")   //do not load this when running tests
 public class DatabaseFunctionInitializer {
 
     //source Stackoverflow

@@ -6,9 +6,12 @@ import nl.carsforyou.garage.dtos.appointment.AppointmentRequestDto;
 import nl.carsforyou.garage.dtos.appointment.AppointmentResponseDto;
 import nl.carsforyou.garage.helpers.UrlHelper;
 import nl.carsforyou.garage.services.AppointmentService;
+import nl.carsforyou.garage.validation.OnCreate;
+import nl.carsforyou.garage.validation.OnUpdate;
 import org.jspecify.annotations.NonNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -59,7 +62,7 @@ public class AppointmentController {
             )
     })
     @PostMapping
-    public ResponseEntity<@NonNull AppointmentResponseDto> createAppointment(@Valid @RequestBody AppointmentRequestDto dto) {
+    public ResponseEntity<@NonNull AppointmentResponseDto> createAppointment(@Validated(OnCreate.class) @RequestBody AppointmentRequestDto dto) {
         AppointmentResponseDto created = appointmentService.createAppointment(dto);
 
         //this will return 201 Created and a location header with the new Id
@@ -76,7 +79,7 @@ public class AppointmentController {
             @ApiResponse(responseCode = "400", description = "Validation error", content = @Content)
     })
     @PutMapping("/{id}")
-    public ResponseEntity<@NonNull AppointmentResponseDto> updateAppointment(@Parameter(description = "Appointment id", example = "1") @PathVariable Long id, @Valid @RequestBody AppointmentRequestDto dto) {
+    public ResponseEntity<@NonNull AppointmentResponseDto> updateAppointment(@Parameter(description = "Appointment id", example = "1") @PathVariable Long id, @Validated(OnUpdate.class) @RequestBody AppointmentRequestDto dto) {
         AppointmentResponseDto updated = appointmentService.updateAppointment(id, dto);
 
         return ResponseEntity.ok(updated);

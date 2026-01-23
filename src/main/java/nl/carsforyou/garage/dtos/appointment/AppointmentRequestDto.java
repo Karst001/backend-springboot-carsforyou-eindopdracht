@@ -4,6 +4,7 @@ package nl.carsforyou.garage.dtos.appointment;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
+import nl.carsforyou.garage.validation.OnCreate;
 
 import java.time.LocalDateTime;
 
@@ -16,8 +17,8 @@ public class AppointmentRequestDto {
     private  String reasonForVisit;
 
     //don't want user to set a completed date while creating an appointment
-    @Null(message = "completedDate must be null when creating an appointment")
-    private  LocalDateTime completedDate;
+    @Null(message = "completedDate must be null when creating an appointment", groups = OnCreate.class)
+    private LocalDateTime completedDate;
 
     @NotNull
     private  Long vehicleId;

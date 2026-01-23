@@ -4,13 +4,11 @@ package nl.carsforyou.garage.services;
 import nl.carsforyou.garage.dtos.part.PartRequestDto;
 import nl.carsforyou.garage.dtos.part.PartResponseDto;
 import nl.carsforyou.garage.entities.PartEntity;
-import nl.carsforyou.garage.entities.UserEntity;
 import nl.carsforyou.garage.mappers.PartDTOMapper;
 import nl.carsforyou.garage.repositories.PartRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.util.List;
 
 @Service
