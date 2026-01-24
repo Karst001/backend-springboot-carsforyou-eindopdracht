@@ -1,6 +1,7 @@
 package nl.carsforyou.garage.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
@@ -23,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 @Configuration
+@ConditionalOnProperty(name = "app.security.oauth2.enabled", havingValue = "true", matchIfMissing = true)
 public class SecurityConfigOauth2 {
     //grabbing settings from KeyCloak
     @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
