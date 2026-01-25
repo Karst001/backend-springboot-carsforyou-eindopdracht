@@ -48,11 +48,11 @@ public class UserService {
 
     public UserResponseDto createUser(UserRequestDto dto) {
         //validate the userRole
-        Set<String> allowed = Set.of("Admin", "Customer", "Service");
+        Set<String> allowed = Set.of("ADMIN", "USER");
 
         if (dto.getUserRole() == null || !allowed.contains(dto.getUserRole())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "userRole must be one of: Admin, Customer, Service");
+                    "userRole must be one of: ADMIN or USER");
         }
 
         //store passed DTO in entityMapper

@@ -1,5 +1,6 @@
 package nl.carsforyou.garage.config;
 
+import jakarta.servlet.DispatcherType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -62,14 +63,29 @@ public class SecurityConfigOauth2 {
 
                 //below is the centralized authorization for all Controllers
                 .authorizeHttpRequests(authorize -> authorize
-                    .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()  //this prevents Swagger UI to be blocked by .anyRequest().denyAll()
+
+                    //added ERROR.permitAll() to properly handle a 404 from the Services
+                    //scenario without ERROR.permitAll(): delete a appointment
+                    //Then try to delete the same appointment again, now in Swagger you see a 403 showing it need higher privileges, this is incorrect
+                    //and should have been a 404 coming from the AppointmentService exception error
+                    //By setting ERROR.permitAll() Spring Boot’s BasicErrorController handles errors on /error.
+                    //Then when an exception occurs during a request, the container dispatches internally to /error to render the error response body.
+                    //If security blocks /error, you get a secondary failure in this case 403
+                    .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
+                    .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll() //this prevents Swagger UI to be blocked by .anyRequest().denyAll()
+
 
                     //Appointments
                     //'user' + 'admin' can do everything
                     .requestMatchers("/appointments/**").hasAnyRole("ADMIN", "USER")
 
 
-                    //Customers more specific tuned rules
+                    //CustomerReports
+                    //'user' + 'admin' can do everything
+                    .requestMatchers("/reports/customers/**").hasAnyRole("ADMIN", "USER")
+
+
+                    //Customers more specific rules
                     //GET: for 'admin' + 'user'
                     .requestMatchers(HttpMethod.GET, "/customers/**").hasAnyRole("ADMIN", "USER")
                     //UPDATE (PUT and PATCH): 'admin' + 'user'
@@ -85,11 +101,6 @@ public class SecurityConfigOauth2 {
                     .requestMatchers("/customeruploads/**").hasAnyRole("ADMIN", "USER")
 
 
-                    //CustomerVisitReport
-                    //'user' + 'admin' can do everything
-                    .requestMatchers("/reports/customers/**").hasAnyRole("ADMIN", "USER")
-
-
                     //Parts
                     //GET: 'admin' + 'user'
                     .requestMatchers(HttpMethod.GET, "/parts/**").hasAnyRole("ADMIN", "USER")
@@ -98,20 +109,21 @@ public class SecurityConfigOauth2 {
                     .requestMatchers("/parts/**").hasRole("ADMIN")
 
 
-                    //ServiceOrders
-                    //'admin' only, all CRUD operations
-                    .requestMatchers("/serviceorders/**").hasRole("ADMIN")
-
-
                     //ServiceOrderParts
                     //'admin' only, all CRUD operations
                     .requestMatchers("/serviceorderparts/**").hasRole("ADMIN")
 
 
+                    //ServiceOrders
+                    //'admin' only, all CRUD operations
+                    .requestMatchers("/serviceorders/**").hasRole("ADMIN")
+
+
                     //Users
                     //GET, CREATE: 'admin' + 'user'
-                    .requestMatchers(HttpMethod.GET, "/users/**").hasAnyRole("ADMIN", "USER")
+                    .requestMatchers(HttpMethod.GET, "/users/**").hasAnyRole("ADMIN")
                     .requestMatchers(HttpMethod.POST, "/users/**").hasAnyRole("ADMIN", "USER")
+
 
                     //UPDATE, DELETE: 'admin' only
                     .requestMatchers(HttpMethod.PUT, "/users/**").hasRole("ADMIN")
@@ -152,8 +164,13 @@ public class SecurityConfigOauth2 {
             @Override
             public Collection<GrantedAuthority> convert(Jwt source) {
                 Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+
+                //for debugging to see in log what role was sent by JWT
+                //List<String> roles = getAuthorities(source);
+                //System.out.println("JWT roles seen by app: " + roles);
+
                 for (String authority : getAuthorities(source)) {
-                    grantedAuthorities.add(new SimpleGrantedAuthority( authority));
+                    grantedAuthorities.add(new SimpleGrantedAuthority(authority));
                 }
                 return grantedAuthorities;
             }
