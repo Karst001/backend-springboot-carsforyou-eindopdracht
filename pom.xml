@@ -119,4 +119,18 @@
             </plugin>
 		</plugins>
 	</build>
+
+    <!-- to suppress the CVE warning for dependency 'spring-boot-starter-test' -->
+    <!-- had a hard time getting rid of this and changing to Spring 4.0.1 is a very big step and may cause issues -->
+    <!-- too according to Stackoverflow and other sources -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>3.27.7</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>
