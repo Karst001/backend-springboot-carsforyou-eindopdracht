@@ -61,7 +61,7 @@ public class CustomerController {
             @ApiResponse(responseCode = "404", description = "Customer not found, check the {id}", content = @Content)
     })
     @GetMapping("/{id}/vehicles")
-    public List<VehicleResponseDto> getVehicles(@PathVariable Long id) {
+    public List<VehicleResponseDto> getAllVehiclesByCustomer(@PathVariable Long id) {
         return customerService.getVehiclesForCustomer(id);
     }
 

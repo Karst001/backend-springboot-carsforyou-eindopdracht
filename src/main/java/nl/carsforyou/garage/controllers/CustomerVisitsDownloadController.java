@@ -32,7 +32,7 @@ public class CustomerVisitsDownloadController {
     @ApiResponse(responseCode = "200", description = "Visit overview returned")
     @ApiResponse(responseCode = "404", description = "Customer not found")
     @GetMapping("/{customerId}/visits")
-    public CustomerVisitSummaryDto downloadCustomerVisits(@PathVariable Long customerId) {
+    public CustomerVisitSummaryDto getCustomerVisits(@PathVariable Long customerId) {
         return reportService.getCustomerVisitSummary(customerId);
     }
 
@@ -56,7 +56,7 @@ public class CustomerVisitsDownloadController {
     @ApiResponse(responseCode = "200", description = "PDF report returned")
     @ApiResponse(responseCode = "404", description = "Customer not found")
     @GetMapping(value = "/{customerId}/service-report.pdf", produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<byte[]> downloadCustomerServiceReportPdf(@PathVariable Long customerId) {
+    public ResponseEntity<byte[]> getCustomerServiceReportPdf(@PathVariable Long customerId) {
         byte[] pdfBytes = reportService.generateCustomerServiceReportPdf(customerId);
         String filename = "customer-" + customerId + "-service-report.pdf";
         return ResponseEntity.ok()

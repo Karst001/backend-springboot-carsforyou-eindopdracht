@@ -76,7 +76,7 @@ public class UserController {
             @ApiResponse(responseCode = "400", description = "Validation error", content = @Content)
     })
     @PutMapping("/{id}")
-    public ResponseEntity<@NonNull UserResponseDto> updateCustomer(@Parameter(description = "User id", example = "1") @PathVariable Long id, @Valid @RequestBody UserRequestDto dto) {
+    public ResponseEntity<@NonNull UserResponseDto> updateUser(@Parameter(description = "User id", example = "1") @PathVariable Long id, @Valid @RequestBody UserRequestDto dto) {
         UserResponseDto updated = userService.updateUser(id, dto);
 
         return ResponseEntity.ok(updated);

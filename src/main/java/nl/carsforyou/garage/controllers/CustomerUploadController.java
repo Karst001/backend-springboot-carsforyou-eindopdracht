@@ -49,7 +49,7 @@ public class CustomerUploadController {
             @ApiResponse(responseCode = "404", description = "Customer-upload not found, check the {id}", content = @Content)
     })
     @GetMapping("/{id}")
-    public CustomerUploadResponseDto getCustomerById(@Parameter(description = "Customer-upload id", example = "1") @PathVariable Long id) {
+    public CustomerUploadResponseDto getCustomerUploadsById(@Parameter(description = "Customer-upload id", example = "1") @PathVariable Long id) {
         return customerUploadService.getCustomerUploadById(id);
     }
 
@@ -58,8 +58,7 @@ public class CustomerUploadController {
     @ApiResponse(responseCode = "201", description = "Upload created")
     @PostMapping(consumes = "multipart/form-data")
     public ResponseEntity<@NonNull CustomerUploadResponseDto> uploadCustomerFile(@RequestParam Long customerId, @RequestParam String description, @RequestParam("file") MultipartFile file) {
-        CustomerUploadResponseDto created =
-                customerUploadService.createCustomerUpload(customerId, description, file);
+        CustomerUploadResponseDto created = customerUploadService.createCustomerUpload(customerId, description, file);
 
         //this will return 201 Created and a location header with the new Id
         return ResponseEntity
