@@ -1,0 +1,3687 @@
+{
+  "info": {
+    "_postman_id": "597227a7-e4f3-46b9-b3d4-adcfd61d5903",
+    "name": "Garage API (OAuth2 using Keycloak)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "14552475"
+  },
+  "item": [
+    {
+      "name": "Appointments",
+      "item": [
+        {
+          "name": "getAllAppointments",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/appointments",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "appointments"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getAppointmentById",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/appointments/{{appointmentId}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "appointments",
+                "{{appointmentId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createAppointment",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"appointmentDate\": \"2026-02-01T09:00:00Z\",\n  \"reasonForVisit\": \"Annual service\",\n  \"completedDate\": null,\n  \"vehicleId\": 1,\n  \"createdByUserId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/appointments",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "appointments"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "updateAppointment",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"appointmentDate\": \"2026-02-01T09:00:00Z\",\n  \"reasonForVisit\": \"Annual service\",\n  \"completedDate\": null,\n  \"vehicleId\": 1,\n  \"createdByUserId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/appointments/{{appointmentId}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "appointments",
+                "{{appointmentId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "cancelAppointment",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/appointments/{{appointmentId}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "appointments",
+                "{{appointmentId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "deleteAppointment",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/appointments/{{appointmentId}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "appointments",
+                "{{appointmentId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Customers",
+      "item": [
+        {
+          "name": "getAllCustomers",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/customers",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "customers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getCustomerById",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/customers/{{customerId}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "customers",
+                "{{customerId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getAllVehiclesByCustomer",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/customers/{{customerId}}/vehicles",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "customers",
+                "{{customerId}}",
+                "vehicles"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createCustomer",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Doe\",\n  \"address\": \"Main Street 1\",\n  \"zipCode\": \"1000AA\",\n  \"city\": \"Amsterdam\",\n  \"telephoneNumber\": \"+31-6-12345678\",\n  \"country\": \"NL\",\n  \"emailAddress\": \"jane.doe@example.com\",\n  \"userId\": 1,\n  \"newsletterSignupDate\": \"2026-01-30T10:00:00Z\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/customers",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "customers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "updateCustomer",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Doe\",\n  \"address\": \"Main Street 1\",\n  \"zipCode\": \"1000AA\",\n  \"city\": \"Amsterdam\",\n  \"telephoneNumber\": \"+31-6-12345678\",\n  \"country\": \"NL\",\n  \"emailAddress\": \"jane.doe@example.com\",\n  \"userId\": 1,\n  \"newsletterSignupDate\": \"2026-01-30T10:00:00Z\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/customers/{{customerId}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "customers",
+                "{{customerId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "deleteCustomer",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/customers/{{customerId}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "customers",
+                "{{customerId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "CustomerUploads",
+      "item": [
+        {
+          "name": "getAllCustomerUploads",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/customeruploads",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "customeruploads"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getCustomerUploadsById",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/customeruploads/{{uploadId}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "customeruploads",
+                "{{uploadId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "uploadCustomerFile",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "value": null
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseURL}}/customeruploads?customerId={{customerId}}&description=Upload description",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "customeruploads"
+              ],
+              "query": [
+                {
+                  "key": "customerId",
+                  "value": "{{customerId}}"
+                },
+                {
+                  "key": "description",
+                  "value": "Upload description"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "updateCustomerUpload",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": 1,\n  \"fileType\": \"application/pdf\",\n  \"fileName\": \"invoice.pdf\",\n  \"description\": \"Invoice upload\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/customeruploads/{{uploadId}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "customeruploads",
+                "{{uploadId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "deleteCustomerUpload",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/customeruploads/{{uploadId}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "customeruploads",
+                "{{uploadId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Customer Download Reports",
+      "item": [
+        {
+          "name": "getCustomerVisits",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/downloads/customers/{{customerId}}/visits",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "downloads",
+                "customers",
+                "{{customerId}}",
+                "visits"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getCustomerServiceReport",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/downloads/customers/{{customerId}}/service-report",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "downloads",
+                "customers",
+                "{{customerId}}",
+                "service-report"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getCustomerServiceReportPdf",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/pdf"
+              }
+            ],
+            "url": {
+              "raw": "{{baseURL}}/downloads/customers/{{customerId}}/service-report.pdf",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "downloads",
+                "customers",
+                "{{customerId}}",
+                "service-report.pdf"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Parts",
+      "item": [
+        {
+          "name": "getAllParts",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/parts",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "parts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getPartById",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/parts/{{partId}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "parts",
+                "{{partId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createPart",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"itemNumber\": \"P-1001\",\n  \"itemDescription\": \"Oil filter\",\n  \"qtyOnHand\": 10,\n  \"qtyOnOrder\": 0,\n  \"unitCost\": 5.5,\n  \"unitPrice\": 9.99\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/parts",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "parts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "updatePart",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"itemNumber\": \"P-1001\",\n  \"itemDescription\": \"Oil filter\",\n  \"qtyOnHand\": 10,\n  \"qtyOnOrder\": 0,\n  \"unitCost\": 5.5,\n  \"unitPrice\": 9.99\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/parts/{{partId}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "parts",
+                "{{partId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "deletePart",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/parts/{{partId}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "parts",
+                "{{partId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "ServiceOrders",
+      "item": [
+        {
+          "name": "getAllServiceOrders",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/serviceorders",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "serviceorders"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getServiceOrderById",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/serviceorders/{{serviceOrderId}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "serviceorders",
+                "{{serviceOrderId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createServiceOrder",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vehicleId\": 1,\n  \"serviceCompletedDate\": \"2026-01-30T10:00:00Z\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/serviceorders",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "serviceorders"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "updateServiceOrder",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vehicleId\": 1,\n  \"serviceCompletedDate\": \"2026-01-30T10:00:00Z\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/serviceorders/{{serviceOrderId}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "serviceorders",
+                "{{serviceOrderId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "deleteServiceOrder",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/serviceorders/{{serviceOrderId}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "serviceorders",
+                "{{serviceOrderId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "ServiceOrderParts",
+      "item": [
+        {
+          "name": "getAllServiceOrderParts",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/serviceorderparts",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "serviceorderparts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getServiceOrderPartById",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/serviceorderparts/{{serviceOrderPartId}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "serviceorderparts",
+                "{{serviceOrderPartId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createServiceOrderPart",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"serviceOrderId\": 1,\n  \"partId\": 1,\n  \"unitCost\": 10.5,\n  \"unitPrice\": 15.0,\n  \"qtyUsed\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/serviceorderparts",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "serviceorderparts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "updateServiceOrderPart",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"serviceOrderId\": 1,\n  \"partId\": 1,\n  \"unitCost\": 10.5,\n  \"unitPrice\": 15.0,\n  \"qtyUsed\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/serviceorderparts/{{serviceOrderPartId}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "serviceorderparts",
+                "{{serviceOrderPartId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "deleteServiceOrderPart",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/serviceorderparts/{{serviceOrderPartId}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "serviceorderparts",
+                "{{serviceOrderPartId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "getAllUsers",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/users",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getUserById",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/users/{{userId}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "users",
+                "{{userId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createUser",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"emailAddress\": \"user@example.com\",\n  \"password\": \"password123\",\n  \"userRole\": \"ADMIN\",\n  \"signupDate\": \"2026-01-30T10:00:00Z\",\n  \"lastSigninDate\": \"2026-01-30T10:00:00Z\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/users",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "updateUser",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"emailAddress\": \"user@example.com\",\n  \"password\": \"password123\",\n  \"userRole\": \"ADMIN\",\n  \"signupDate\": \"2026-01-30T10:00:00Z\",\n  \"lastSigninDate\": \"2026-01-30T10:00:00Z\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/users/{{userId}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "users",
+                "{{userId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "deleteUser",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/users/{{userId}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "users",
+                "{{userId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Vehicles",
+      "item": [
+        {
+          "name": "getAllVehicles",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/vehicles",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "vehicles"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getVehicleById",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/vehicles/{{vehicleId}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "vehicles",
+                "{{vehicleId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "getServiceOrdersByVehicleId",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/vehicles/{{vehicleId}}/serviceorders",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "vehicles",
+                "{{vehicleId}}",
+                "serviceorders"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "createVehicle",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"licensePlate\": \"AB-12-CD\",\n  \"vinNumber\": \"VIN1234567890\",\n  \"make\": \"Toyota\",\n  \"model\": \"Corolla\",\n  \"paintColor\": \"Blue\",\n  \"bodyStyle\": \"Sedan\",\n  \"trailerHitch\": false,\n  \"costPrice\": 10000,\n  \"salePrice\": 12000,\n  \"customerId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/vehicles",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "vehicles"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "updateVehicle",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"licensePlate\": \"AB-12-CD\",\n  \"vinNumber\": \"VIN1234567890\",\n  \"make\": \"Toyota\",\n  \"model\": \"Corolla\",\n  \"paintColor\": \"Blue\",\n  \"bodyStyle\": \"Sedan\",\n  \"trailerHitch\": false,\n  \"costPrice\": 10000,\n  \"salePrice\": 12000,\n  \"customerId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/vehicles/{{vehicleId}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "vehicles",
+                "{{vehicleId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "deleteVehicle",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://localhost:9090/realms/Garage/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "client_authentication",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": true,
+                  "type": "boolean"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "GWv4CAZsFO35inn3Cu63F5ZqyjcKFtM9",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "Garage",
+                  "type": "string"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.pstmn.io/v1/browser-callback",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "garagetoken",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseURL}}/vehicles/{{vehicleId}}",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "vehicles",
+                "{{vehicleId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseURL",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "vehicleId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "userId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "serviceOrderId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "serviceOrderPartId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "partId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "customerId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "appointmentId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "uploadId",
+      "value": "1",
+      "type": "string"
+    }
+  ]
+}

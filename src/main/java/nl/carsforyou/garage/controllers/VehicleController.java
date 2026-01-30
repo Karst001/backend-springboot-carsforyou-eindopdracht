@@ -59,7 +59,7 @@ public class VehicleController {
             @ApiResponse(responseCode = "404", description = "Vehicle not found, check the {id}", content = @Content)
     })
     @GetMapping("/{id}/serviceorders")
-    public List<ServiceOrderResponseDto> getServiceOrders(@PathVariable Long id) {
+    public List<ServiceOrderResponseDto> getServiceOrdersByVehicleId(@PathVariable Long id) {
         return vehicleService.getServiceOrdersForVehicle(id);
     }
 
@@ -102,7 +102,7 @@ public class VehicleController {
     )
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCustomer(@Parameter(description = "Vehicle id", example = "1") @PathVariable Long id) {
+    public void deleteVehicle(@Parameter(description = "Vehicle id", example = "1") @PathVariable Long id) {
         vehicleService.deleteVehicle(id);
     }
 }
