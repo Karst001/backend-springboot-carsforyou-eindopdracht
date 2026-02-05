@@ -175,6 +175,7 @@ public class CustomerVisitReportService {
     }
 
 
+    //used AI to build this PDF report, was a first for me writing a PDF like this
     private byte[] renderCustomerServiceReportPdf(CustomerServiceReportDto report) {
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");

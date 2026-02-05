@@ -2,6 +2,7 @@
 package nl.carsforyou.garage.services;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import nl.carsforyou.garage.dtos.appointment.AppointmentRequestDto;
 import nl.carsforyou.garage.dtos.appointment.AppointmentResponseDto;
 import nl.carsforyou.garage.entities.AppointmentEntity;
@@ -39,6 +40,7 @@ public class AppointmentService {
         return appointmentDTOMapper.mapToDto(appointment);
     }
 
+    @Transactional
     public AppointmentResponseDto createAppointment(AppointmentRequestDto dto) {
         //store passed DTO in entityMapper
         AppointmentEntity entity = appointmentDTOMapper.mapToEntity(dto);
@@ -89,6 +91,8 @@ public class AppointmentService {
         return appointmentDTOMapper.mapToDto(saved);
     }
 
+
+    @Transactional
     public void deleteAppointment(Long id) {
         AppointmentEntity appointment = appointmentRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(
@@ -107,6 +111,7 @@ public class AppointmentService {
 
 
     //this is a requirement in my Ideefase document, wasn't taken care of yet
+    @Transactional
     public AppointmentResponseDto cancelAppointment(Long id) {
         AppointmentEntity existing = appointmentRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Appointment with Id " + id + " was not found"));

@@ -1,6 +1,7 @@
 // Service -> talks to repository
 package nl.carsforyou.garage.services;
 
+import jakarta.transaction.Transactional;
 import nl.carsforyou.garage.dtos.part.PartRequestDto;
 import nl.carsforyou.garage.dtos.part.PartResponseDto;
 import nl.carsforyou.garage.entities.PartEntity;
@@ -33,6 +34,7 @@ public class PartService {
         return partDTOMapper.mapToDto(part);
     }
 
+    @Transactional
     public PartResponseDto createPart(PartRequestDto dto) {
         //store passed DTO in entityMapper
         PartEntity entity = partDTOMapper.mapToEntity(dto);
@@ -60,6 +62,7 @@ public class PartService {
         return partDTOMapper.mapToDto(saved);
     }
 
+    @Transactional
     public void deletePart(Long id) {
         PartEntity user = partRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(

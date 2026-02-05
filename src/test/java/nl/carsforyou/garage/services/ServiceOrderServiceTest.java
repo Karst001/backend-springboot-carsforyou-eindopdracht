@@ -176,12 +176,11 @@ public class ServiceOrderServiceTest {
 
     //test #6, test delete service order, change findById(10L) to findById(1L) and test will fail
     @Test
-    void deleteServiceOrder_whenNoPartsAndNoVehicleRelation_deletes() {
+    void deleteServiceOrder_whenNoParts_deletes() {
         //Arrange
         var existing = new ServiceOrderEntity();
         when(serviceOrderRepository.findById(10L)).thenReturn(Optional.of(existing));
         when(serviceOrderPartRepository.existsByServiceOrder_ServiceOrderId(10L)).thenReturn(false);
-        when(serviceOrderRepository.existsByVehicle_VehicleId(10L)).thenReturn(false);
 
         //Act
         serviceOrderService.deleteServiceOrder(10L);
@@ -193,12 +192,11 @@ public class ServiceOrderServiceTest {
 
     //test #7, test delete service order, change findById(10L) to findById(1L) and test will fail
     @Test
-    void deleteServiceOrder_whenVehicleRelationExists_throws400_andDoesNotDelete() {
+    void deleteServiceOrder_whenPartsExist_throws400_andDoesNotDelete() {
         //Arrange
         var existing = new ServiceOrderEntity();
         when(serviceOrderRepository.findById(10L)).thenReturn(Optional.of(existing));
-        when(serviceOrderPartRepository.existsByServiceOrder_ServiceOrderId(10L)).thenReturn(false);
-        when(serviceOrderRepository.existsByVehicle_VehicleId(10L)).thenReturn(true);
+        when(serviceOrderPartRepository.existsByServiceOrder_ServiceOrderId(10L)).thenReturn(true);
 
         //Act
         var ex = assertThrows(ResponseStatusException.class,
@@ -206,7 +204,22 @@ public class ServiceOrderServiceTest {
 
         //Assert
         assertEquals(HttpStatus.BAD_REQUEST, ex.getStatusCode());
-        assertTrue(ex.getReason().contains("because service orders exist"));
+        assertTrue(ex.getReason().contains("because it has parts"));
         verify(serviceOrderRepository, never()).delete(any());
+    }
+
+    //test #8 happy flow test upon successful delete
+    @Test
+    void deleteServiceOrder_whenNoPartsExist_deletesServiceOrder() {
+        //arrange
+        var existing = new ServiceOrderEntity();
+        when(serviceOrderRepository.findById(10L)).thenReturn(Optional.of(existing));
+        when(serviceOrderPartRepository.existsByServiceOrder_ServiceOrderId(10L)).thenReturn(false);
+
+        //act
+        serviceOrderService.deleteServiceOrder(10L);
+
+        //Assert
+        verify(serviceOrderRepository).delete(existing);
     }
 }

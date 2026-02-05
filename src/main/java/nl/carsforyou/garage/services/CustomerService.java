@@ -68,7 +68,7 @@ public class CustomerService {
                 .toList();
     }
 
-
+    @Transactional
     public CustomerResponseDto createCustomer(CustomerRequestDto dto) {
         //store passed DTO in entityMapper
         CustomerEntity entity = customerDTOMapper.mapToEntity(dto);
@@ -114,7 +114,6 @@ public class CustomerService {
                     "Cannot delete Customer " + id + " because vehicles exist"
             );
         }
-
 
         //since there is a relation between Customers and CustomerUploads i need to clean up the relations on delete
         //Also add logic that will delete the file from disk as it was stored on disk using uploadCreate

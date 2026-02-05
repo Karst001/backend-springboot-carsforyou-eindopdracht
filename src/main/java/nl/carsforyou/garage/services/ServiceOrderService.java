@@ -1,6 +1,7 @@
 // Service -> talks to repository
 package nl.carsforyou.garage.services;
 
+import jakarta.transaction.Transactional;
 import nl.carsforyou.garage.dtos.ServiceOrder.ServiceOrderRequestDto;
 import nl.carsforyou.garage.dtos.ServiceOrder.ServiceOrderResponseDto;
 import nl.carsforyou.garage.entities.ServiceOrderEntity;
@@ -44,7 +45,7 @@ public class ServiceOrderService {
         return serviceOrderDTOMapper.mapToDto(serviceOrder);
     }
 
-
+    @Transactional
     public ServiceOrderResponseDto createServiceOrder(ServiceOrderRequestDto dto) {
         //store passed DTO in entityMapper
         ServiceOrderEntity entity = serviceOrderDTOMapper.mapToEntity(dto);
@@ -85,6 +86,7 @@ public class ServiceOrderService {
     }
 
 
+    @Transactional
     public void deleteServiceOrder(Long id) {
         ServiceOrderEntity serverOrder = serviceOrderRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(
@@ -98,17 +100,10 @@ public class ServiceOrderService {
             );
         }
 
-        //check if Vehicles exists in Service, if true do not delete
-        if (serviceOrderRepository.existsByVehicle_VehicleId(id)) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST,
-                    "Cannot delete Vehicle " + id + " because service orders exist. Delete the vehicle first."
-            );
-        }
-
         //only delete if id did not throw an exception
         serviceOrderRepository.delete(serverOrder);
     }
+
 
     //helper to check if ServiceOrder has a vehicle relation
     private VehicleEntity checkVehicle(Long vehicleId) {
