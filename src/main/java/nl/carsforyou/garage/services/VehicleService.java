@@ -1,6 +1,7 @@
 // Service -> talks to repository
 package nl.carsforyou.garage.services;
 
+import jakarta.transaction.Transactional;
 import nl.carsforyou.garage.dtos.ServiceOrder.ServiceOrderResponseDto;
 import nl.carsforyou.garage.dtos.Vehicle.VehicleRequestDto;
 import nl.carsforyou.garage.dtos.Vehicle.VehicleResponseDto;
@@ -66,6 +67,7 @@ public class VehicleService {
                 .toList();
     }
 
+    @Transactional
     public VehicleResponseDto createVehicle(VehicleRequestDto dto) {
         //store passed DTO in entityMapper
         VehicleEntity entity = vehicleDTOMapper.mapToEntity(dto);
@@ -108,6 +110,7 @@ public class VehicleService {
     }
 
 
+    @Transactional
     public void deleteVehicle(Long id) {
         VehicleEntity vehicle = vehicleRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(
@@ -118,6 +121,14 @@ public class VehicleService {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
                     "Cannot delete Vehicle " + id + " because it has appointments. Please delete them first."
+            );
+        }
+
+        //prevent delete if service orders exist
+        if (serviceOrderRepository.existsByVehicle_VehicleId(id)) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Cannot delete Vehicle " + id + " because it has service orders. Please delete them first."
             );
         }
 

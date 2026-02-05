@@ -50,7 +50,7 @@ public class CustomerUploadService {
         return customerUploadDTOMapper.mapToDto(customerUpload);
     }
 
-
+    @Transactional
     public CustomerUploadResponseDto createCustomerUpload(Long customerId, String description, MultipartFile file) {
         //validate
         if (file == null || file.isEmpty()) {
@@ -148,15 +148,11 @@ public class CustomerUploadService {
             try {
                 Files.deleteIfExists(Paths.get(filePath));
             } catch (IOException e) {
-                // Decide your policy:
-                // A) fail the request (recommended if you require disk consistency)
+                // a hard fail of the request, to maintain disk file consistency
                 throw new ResponseStatusException(
                         HttpStatus.INTERNAL_SERVER_ERROR,
                         "Could not delete file from disk"
                 );
-
-                // B) OR log and continue (best-effort cleanup)
-                // log.warn("Failed to delete file: {}", filePath, e);
             }
         }
 

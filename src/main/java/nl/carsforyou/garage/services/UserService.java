@@ -1,6 +1,7 @@
 // Service -> talks to repository
 package nl.carsforyou.garage.services;
 
+import jakarta.transaction.Transactional;
 import nl.carsforyou.garage.dtos.User.UserRequestDto;
 import nl.carsforyou.garage.dtos.User.UserResponseDto;
 import nl.carsforyou.garage.entities.AppointmentEntity;
@@ -46,6 +47,7 @@ public class UserService {
         return userDTOMapper.mapToDto(user);
     }
 
+    @Transactional
     public UserResponseDto createUser(UserRequestDto dto) {
         //validate the userRole
         Set<String> allowed = Set.of("ADMIN", "USER");
@@ -71,6 +73,7 @@ public class UserService {
         return userDTOMapper.mapToDto(saved);
     }
 
+
     public UserResponseDto updateUser(Long id, UserRequestDto dto) {
         UserEntity existing = userRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -87,6 +90,8 @@ public class UserService {
         return userDTOMapper.mapToDto(saved);
     }
 
+
+    @Transactional
     public void deleteUser(Long id) {
         UserEntity user = userRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(
